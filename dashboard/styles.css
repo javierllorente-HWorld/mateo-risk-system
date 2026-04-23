@@ -36,9 +36,9 @@ body {
 
 body {
   margin: 0;
-  background: radial-gradient(900px 700px at 12% -15%, rgba(211, 161, 90, 0.18), transparent 58%),
-    radial-gradient(900px 700px at 88% -10%, rgba(153, 101, 46, 0.18), transparent 60%),
-    linear-gradient(180deg, rgba(60, 34, 14, 0.98), rgba(58, 32, 13, 0.96) 260px, var(--cream-soft) 260px);
+  background: radial-gradient(900px 700px at 12% -15%, rgba(211, 161, 90, 0.14), transparent 58%),
+    radial-gradient(900px 700px at 88% -10%, rgba(153, 101, 46, 0.14), transparent 60%),
+    linear-gradient(180deg, rgba(107, 58, 16, 0.98), rgba(90, 47, 12, 0.96) 260px, var(--cream-soft) 260px);
   color: var(--text);
 }
 
@@ -46,14 +46,14 @@ body {
   max-width: 860px;
   margin: 28px auto;
   padding: 0 18px;
-  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--text);
 }
 
 /* Top hero bar */
 .heroBar {
-  padding: 28px 0 14px 0;
-  color: rgba(243, 235, 221, 0.96);
+  padding: 26px 0 14px 0;
+  color: #f3e4cf;
   position: relative;
   overflow: hidden;
 }
@@ -63,10 +63,9 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(520px 320px at 18% 20%, rgba(211, 161, 90, 0.22), transparent 65%),
-    radial-gradient(520px 360px at 80% 15%, rgba(153, 101, 46, 0.22), transparent 70%),
-    radial-gradient(900px 520px at 55% -20%, rgba(231, 221, 204, 0.06), transparent 60%),
-    linear-gradient(180deg, rgba(58, 32, 13, 0.75), rgba(58, 32, 13, 0.25));
+    radial-gradient(620px 360px at 18% 15%, rgba(122, 69, 23, 0.55), transparent 68%),
+    radial-gradient(640px 380px at 78% 10%, rgba(90, 47, 12, 0.40), transparent 72%),
+    linear-gradient(180deg, #7a4517 0%, #6b3a10 40%, #5a2f0c 100%);
   pointer-events: none;
 }
 
@@ -74,16 +73,15 @@ body {
 .heroBar::after {
   content: "";
   position: absolute;
-  right: -140px;
-  bottom: -160px;
-  width: 420px;
-  height: 340px;
+  right: -160px;
+  bottom: -190px;
+  width: 520px;
+  height: 420px;
   border-radius: 999px;
   background:
-    radial-gradient(240px 220px at 40% 40%, rgba(211, 161, 90, 0.18), transparent 65%),
-    radial-gradient(260px 220px at 70% 55%, rgba(139, 90, 43, 0.22), transparent 68%),
-    linear-gradient(180deg, rgba(231, 221, 204, 0.06), rgba(231, 221, 204, 0.02));
-  border: 1px solid rgba(211, 161, 90, 0.10);
+    radial-gradient(360px 320px at 55% 45%, rgba(122, 69, 23, 0.28), transparent 62%),
+    radial-gradient(380px 320px at 72% 60%, rgba(243, 228, 207, 0.10), transparent 70%),
+    linear-gradient(180deg, rgba(122, 69, 23, 0.22), rgba(122, 69, 23, 0.06));
   filter: blur(0.2px);
   pointer-events: none;
 }
@@ -92,38 +90,33 @@ body {
   display: grid;
   grid-template-columns: 1fr 240px;
   gap: 18px;
-  align-items: center;
+  align-items: start;
   position: relative;
   z-index: 1;
-}
-
-.heroKicker {
-  font-size: 12px;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: rgba(231, 221, 204, 0.75);
 }
 
 .heroTitleRow {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin: 8px 0 6px 0;
+  margin: 6px 0 6px 0;
 }
 
 .heroIcon {
-  width: 44px;
-  height: 44px;
+  width: 56px;
+  height: 56px;
   border-radius: 14px;
   display: grid;
   place-items: center;
-  color: rgba(243, 235, 221, 0.92);
-  background:
-    radial-gradient(22px 22px at 35% 35%, rgba(211, 161, 90, 0.35), transparent 65%),
-    linear-gradient(180deg, rgba(231, 221, 204, 0.10), rgba(231, 221, 204, 0.04));
-  border: 1px solid rgba(211, 161, 90, 0.22);
-  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.20);
+  color: #f3e4cf;
+  background: rgba(139, 90, 43, 0.22);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.22);
   overflow: hidden;
+}
+
+.heroIcon svg {
+  width: 26px;
+  height: 26px;
 }
 
 .heroLogo {
@@ -138,33 +131,38 @@ body {
   font-size: 28px;
   line-height: 1.05;
   letter-spacing: 0.2px;
-  color: rgba(243, 235, 221, 0.98);
+  color: #f7eedd;
+  font-weight: 700;
 }
 
 .heroSubtitle {
   margin: 0;
   max-width: 60ch;
-  color: rgba(231, 221, 204, 0.84);
+  color: #f3e4cf;
+  font-size: 16px;
+  font-weight: 400;
 }
 
-/* Decorative element inspired by “Mateo” (no images, pure CSS) */
+/* Top-right decorative square with Mateo logo */
 .heroMateo {
-  height: 132px;
+  width: 92px;
+  height: 92px;
   position: relative;
-  border-radius: 22px;
-  border: 1px solid rgba(211, 161, 90, 0.18);
-  background: linear-gradient(180deg, rgba(231, 221, 204, 0.05), rgba(231, 221, 204, 0.02));
-  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.26);
+  border-radius: 16px;
+  border: none;
+  background: rgba(243, 228, 207, 0.10);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.24);
   display: grid;
   place-items: center;
   overflow: hidden;
+  justify-self: end;
 }
 
 .heroLogoLarge {
-  width: min(220px, 92%);
+  width: 82%;
   height: auto;
   opacity: 0.98;
-  transform: translateY(2px);
+  transform: translateY(1px);
 }
 
 .muted {
@@ -516,7 +514,9 @@ code {
     grid-template-columns: 1fr;
   }
   .heroMateo {
+    width: 92px;
     height: 92px;
+    justify-self: start;
   }
   .heroMeta {
     grid-template-columns: 1fr;
