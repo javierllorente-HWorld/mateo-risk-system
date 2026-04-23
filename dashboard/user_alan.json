@@ -13,6 +13,26 @@
     "summary": "Monto solicitado alto y poca antigüedad laboral.",
     "flags": ["requested_amount_high", "short_job_tenure"],
     "reasons": ["Monto solicitado alto.", "Poca antigüedad laboral."]
+  },
+  "pyme": {
+    "applicantName": "Turing Analytics SA",
+    "monthlyIncome": 620000,
+    "requestedAmount": 18500000,
+    "employmentStatus": "Análisis de datos / consultoría",
+    "monthsAtJob": 14,
+    "country": "AR",
+    "currency": "ARS",
+    "assessment": {
+      "score": 88,
+      "decision": "reject",
+      "summary": "RECHAZADO: Márgenes ajustados, sector volátil y apalancamiento muy alto frente a facturación.",
+      "flags": ["thin_margins", "sector_risk", "high_leverage"],
+      "reasons": [
+        "EBITDA negativo en dos trimestres consecutivos.",
+        "Dependencia de un único contrato público renovable.",
+        "Endeudamiento bancario superior a 4× facturación anual."
+      ]
+    }
   }
 }
 

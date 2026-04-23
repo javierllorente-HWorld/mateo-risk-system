@@ -6,6 +6,25 @@
     "summary": "REVIEW (score=55): Monto solicitado alto. Poca antigüedad laboral.",
     "flags": ["requested_amount_high", "short_job_tenure"],
     "reasons": ["Monto solicitado alto.", "Poca antigüedad laboral."]
+  },
+  "pyme": {
+    "applicantName": "Hopper Labs SRL",
+    "monthlyIncome": 2650000,
+    "requestedAmount": 9500000,
+    "employmentStatus": "Software y servicios profesionales",
+    "monthsAtJob": 84,
+    "country": "AR",
+    "currency": "ARS",
+    "assessment": {
+      "score": 48,
+      "decision": "review",
+      "summary": "REVISIÓN (score=48): Concentración de ingresos y apalancamiento elevado frente a facturación.",
+      "flags": ["high_leverage", "customer_concentration"],
+      "reasons": [
+        "Tres principales clientes concentran más del 60% de la facturación.",
+        "Deuda financiera elevada respecto a flujo operativo."
+      ]
+    }
   }
 }
 

@@ -47,11 +47,11 @@
       <div class="container analysisInner">
         <div class="analysisLabel">Analizar como:</div>
         <div class="segmented" role="radiogroup" aria-label="Analizar como">
-          <input type="radio" name="analysisType" id="analysisPersona" class="segmentedInput" checked />
-          <label for="analysisPersona" class="segmentedOption">Persona</label>
-
-          <input type="radio" name="analysisType" id="analysisPyme" class="segmentedInput" />
+          <input type="radio" name="analysisType" id="analysisPyme" class="segmentedInput" value="pyme" />
           <label for="analysisPyme" class="segmentedOption">Pyme</label>
+
+          <input type="radio" name="analysisType" id="analysisPersona" class="segmentedInput" value="persona" checked />
+          <label for="analysisPersona" class="segmentedOption">Persona</label>
         </div>
       </div>
     </section>
@@ -75,7 +75,7 @@
               </div>
             </div>
             <div class="metaItem">
-              <div class="label">Solicitante</div>
+              <div class="label" id="applicantMetaLabel">Solicitante</div>
               <div class="dropdown" id="applicantDropdown">
                 <button class="dropdownTrigger" id="applicantTrigger" type="button" aria-haspopup="listbox" aria-expanded="false">
                   <span class="metaValue" id="applicantName">—</span>
@@ -100,22 +100,22 @@
         </div>
 
         <section class="subcard" id="applicantDetails">
-          <div class="subcardTitle">Datos del solicitante</div>
+          <div class="subcardTitle" id="applicantDetailsTitle">Datos del solicitante</div>
           <div class="detailsGrid">
             <div class="detail" data-field>
-              <div class="label">Ingreso mensual</div>
+              <div class="label" id="labelMonthlyIncome">Ingreso mensual</div>
               <div class="value" id="monthlyIncome">—</div>
             </div>
             <div class="detail" data-field>
-              <div class="label">Monto solicitado</div>
+              <div class="label" id="labelRequestedAmount">Monto solicitado</div>
               <div class="value" id="requestedAmount">—</div>
             </div>
             <div class="detail" data-field>
-              <div class="label">Empleo</div>
+              <div class="label" id="labelEmployment">Empleo</div>
               <div class="value" id="employmentStatus">—</div>
             </div>
             <div class="detail" data-field>
-              <div class="label">Antigüedad laboral</div>
+              <div class="label" id="labelJobTenure">Antigüedad laboral</div>
               <div class="value" id="monthsAtJob">—</div>
             </div>
           </div>

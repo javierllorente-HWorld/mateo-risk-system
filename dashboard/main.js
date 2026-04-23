@@ -92,7 +92,11 @@ function flagToLabelEs(flag) {
     low_income: "Ingresos bajos",
     high_dti: "Relación deuda/ingreso alta",
     underage: "Edad insuficiente",
-    country_risk: "Riesgo país elevado"
+    country_risk: "Riesgo país elevado",
+    high_leverage: "Apalancamiento elevado",
+    customer_concentration: "Concentración de clientes",
+    thin_margins: "Márgenes ajustados",
+    sector_risk: "Sector con volatilidad alta"
   };
   if (map[key]) return map[key];
   if (!key) return "—";
@@ -198,7 +202,94 @@ async function loadAssessmentJson(path) {
   return await res.json();
 }
 
-function applyDashboardData(data) {
+const MODE_COPY = {
+  persona: {
+    detailsTitle: "Datos del solicitante",
+    applicantLabel: "Solicitante",
+    income: "Ingreso mensual",
+    amount: "Monto solicitado",
+    employment: "Empleo",
+    tenure: "Antigüedad laboral"
+  },
+  pyme: {
+    detailsTitle: "Datos de la empresa",
+    applicantLabel: "Empresa",
+    income: "Facturación mensual",
+    amount: "Monto solicitado",
+    employment: "Actividad",
+    tenure: "Antigüedad de la empresa"
+  }
+};
+
+function getAnalysisModeFromStorage() {
+  try {
+    const v = window.localStorage.getItem("dashboard_analysis_mode");
+    if (v === "pyme" || v === "persona") return v;
+  } catch {}
+  return "persona";
+}
+
+function persistAnalysisMode(mode) {
+  try {
+    window.localStorage.setItem("dashboard_analysis_mode", mode);
+  } catch {}
+}
+
+function syncAnalysisRadiosFromStorage() {
+  const mode = getAnalysisModeFromStorage();
+  const persona = document.getElementById("analysisPersona");
+  const pyme = document.getElementById("analysisPyme");
+  if (!persona || !pyme) return;
+  if (mode === "pyme") {
+    pyme.checked = true;
+    persona.checked = false;
+  } else {
+    persona.checked = true;
+    pyme.checked = false;
+  }
+}
+
+function getCurrentAnalysisMode() {
+  const el = document.querySelector('input[name="analysisType"]:checked');
+  return el?.value === "pyme" ? "pyme" : "persona";
+}
+
+function applyModeLabels(mode) {
+  const m = mode === "pyme" ? "pyme" : "persona";
+  const c = MODE_COPY[m];
+  setText("applicantDetailsTitle", c.detailsTitle);
+  setText("applicantMetaLabel", c.applicantLabel);
+  setText("labelMonthlyIncome", c.income);
+  setText("labelRequestedAmount", c.amount);
+  setText("labelEmployment", c.employment);
+  setText("labelJobTenure", c.tenure);
+}
+
+function buildViewRow(raw, analysisMode) {
+  const base = raw && typeof raw === "object" ? raw : {};
+  if (analysisMode !== "pyme" || !base.pyme || typeof base.pyme !== "object") {
+    return base;
+  }
+  const p = base.pyme;
+  return {
+    ...base,
+    applicantName: p.applicantName ?? base.applicantName,
+    monthlyIncome: p.monthlyIncome ?? base.monthlyIncome,
+    requestedAmount: p.requestedAmount ?? base.requestedAmount,
+    employmentStatus: p.employmentStatus ?? base.employmentStatus,
+    monthsAtJob: p.monthsAtJob ?? base.monthsAtJob,
+    applicantAgeYears: Object.prototype.hasOwnProperty.call(p, "applicantAgeYears") ? p.applicantAgeYears : undefined,
+    country: p.country ?? base.country,
+    currency: p.currency ?? base.currency,
+    assessment: p.assessment ?? base.assessment
+  };
+}
+
+function applyDashboardData(raw, analysisMode) {
+  const mode = analysisMode === "pyme" ? "pyme" : "persona";
+  applyModeLabels(mode);
+  const data = buildViewRow(raw, mode);
+
   setText("applicantName", data?.applicantName);
   const score = typeof data?.assessment?.score === "number" ? data.assessment.score : Number(data?.assessment?.score);
   const decision = data?.assessment?.decision;
@@ -244,9 +335,23 @@ function applyDashboardData(data) {
 }
 
 async function load() {
+  syncAnalysisRadiosFromStorage();
+
   const trigger = document.getElementById("applicantTrigger");
   const menu = document.getElementById("applicantMenu");
   const search = document.getElementById("applicantSearch");
+
+  let lastLoadedRaw = null;
+
+  const onAnalysisModeChange = () => {
+    const mode = getCurrentAnalysisMode();
+    persistAnalysisMode(mode);
+    if (lastLoadedRaw) applyDashboardData(lastLoadedRaw, mode);
+  };
+
+  for (const id of ["analysisPyme", "analysisPersona"]) {
+    document.getElementById(id)?.addEventListener("change", onAnalysisModeChange);
+  }
 
   const users = (await loadUsersIndex()) ?? [
     { id: "default", label: "Grace Hopper", subtitle: "Ejemplo", dataPath: "./data.json" }
@@ -258,7 +363,8 @@ async function load() {
   const loadAndRender = async (u) => {
     const path = u?.dataPath ?? "./data.json";
     const data = await loadAssessmentJson(path);
-    applyDashboardData(data);
+    lastLoadedRaw = data;
+    applyDashboardData(data, getCurrentAnalysisMode());
   };
 
   const onSelectUser = async (u) => {
