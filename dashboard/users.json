@@ -1,0 +1,23 @@
+{
+  "users": [
+    {
+      "id": "ada",
+      "label": "Ada Lovelace",
+      "subtitle": "Perfil con señales moderadas",
+      "dataPath": "./data.json"
+    },
+    {
+      "id": "grace",
+      "label": "Grace Hopper",
+      "subtitle": "Perfil con riesgo bajo",
+      "dataPath": "./user_grace.json"
+    },
+    {
+      "id": "alan",
+      "label": "Alan Turing",
+      "subtitle": "Perfil con riesgo alto",
+      "dataPath": "./user_alan.json"
+    }
+  ]
+}
+

@@ -19,6 +19,10 @@
 
   --radius: 14px;
   --ring: 0 0 0 4px rgba(211, 161, 90, 0.28);
+
+  --risk-low: #1f7a3a;
+  --risk-mid: #b7791f;
+  --risk-high: #b8322a;
 }
 
 * {
@@ -73,6 +77,46 @@ body {
   border-bottom: 1px solid rgba(90, 52, 18, 0.12);
 }
 
+.statusRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: rgba(243, 235, 221, 0.60);
+  border: 1px solid rgba(90, 52, 18, 0.10);
+  margin-bottom: 12px;
+}
+
+.statusChip {
+  font-size: 13px;
+  font-weight: 650;
+  padding: 6px 10px;
+  border-radius: 999px;
+  border: 1px solid rgba(90, 52, 18, 0.14);
+  background: rgba(231, 221, 204, 0.70);
+  color: rgba(90, 52, 18, 0.92);
+}
+
+.statusChip.low {
+  border-color: rgba(31, 122, 58, 0.35);
+  background: rgba(31, 122, 58, 0.10);
+  color: var(--risk-low);
+}
+
+.statusChip.medium {
+  border-color: rgba(183, 121, 31, 0.40);
+  background: rgba(183, 121, 31, 0.12);
+  color: var(--risk-mid);
+}
+
+.statusChip.high {
+  border-color: rgba(184, 50, 42, 0.40);
+  background: rgba(184, 50, 42, 0.10);
+  color: var(--risk-high);
+}
+
 .heroTop {
   display: flex;
   align-items: flex-start;
@@ -87,6 +131,16 @@ body {
   font-weight: 700;
   letter-spacing: 0.3px;
   color: var(--brown-dark);
+}
+
+.decisionText.approve {
+  color: var(--risk-low);
+}
+.decisionText.review {
+  color: var(--risk-mid);
+}
+.decisionText.reject {
+  color: var(--risk-high);
 }
 
 .decisionPill {
@@ -119,9 +173,90 @@ body {
   color: rgba(42, 26, 16, 0.94);
 }
 
+.dropdown {
+  position: relative;
+}
+
+.dropdownTrigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 8px 10px;
+  border-radius: 12px;
+  background: rgba(231, 221, 204, 0.55);
+  border: 1px solid rgba(90, 52, 18, 0.14);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  box-shadow: 0 6px 14px rgba(90, 52, 18, 0.08);
+}
+
+.dropdownTrigger:focus-visible {
+  outline: none;
+  box-shadow: var(--ring), 0 6px 14px rgba(90, 52, 18, 0.08);
+}
+
+.chevron {
+  color: rgba(90, 52, 18, 0.70);
+  font-size: 14px;
+  line-height: 1;
+}
+
+.dropdownMenu {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: calc(100% + 8px);
+  z-index: 10;
+  display: none;
+  padding: 8px;
+  border-radius: 14px;
+  background: rgba(243, 235, 221, 0.96);
+  border: 1px solid rgba(90, 52, 18, 0.16);
+  box-shadow: 0 16px 40px rgba(90, 52, 18, 0.16);
+  backdrop-filter: blur(8px);
+}
+
+.dropdownMenu.open {
+  display: block;
+}
+
+.menuItem {
+  width: 100%;
+  text-align: left;
+  padding: 10px 10px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  color: rgba(42, 26, 16, 0.94);
+  font: inherit;
+}
+
+.menuItem:hover {
+  background: rgba(216, 199, 174, 0.35);
+  border-color: rgba(90, 52, 18, 0.10);
+}
+
+.menuItem:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}
+
+.menuItem .sub {
+  display: block;
+  margin-top: 4px;
+  font-size: 12px;
+  color: rgba(90, 52, 18, 0.62);
+}
+
 .scoreValue {
   font-weight: 700;
   color: var(--brown-dark);
+  font-size: 26px;
+  line-height: 1;
 }
 
 .scoreContext {
@@ -131,6 +266,22 @@ body {
   border: 1px solid rgba(90, 52, 18, 0.14);
   background: rgba(231, 221, 204, 0.70);
   color: rgba(90, 52, 18, 0.88);
+}
+
+.scoreContext.low {
+  border-color: rgba(31, 122, 58, 0.35);
+  background: rgba(31, 122, 58, 0.10);
+  color: var(--risk-low);
+}
+.scoreContext.medium {
+  border-color: rgba(183, 121, 31, 0.40);
+  background: rgba(183, 121, 31, 0.12);
+  color: var(--risk-mid);
+}
+.scoreContext.high {
+  border-color: rgba(184, 50, 42, 0.40);
+  background: rgba(184, 50, 42, 0.10);
+  color: var(--risk-high);
 }
 
 .row {
@@ -181,7 +332,7 @@ body {
 
 .detailsGrid {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 12px;
 }
 
@@ -207,21 +358,21 @@ body {
 }
 
 .pill.approve {
-  border-color: rgba(90, 52, 18, 0.22);
-  background: linear-gradient(180deg, rgba(211, 161, 90, 0.26), rgba(231, 221, 204, 0.80));
-  color: var(--brown-dark);
+  border-color: rgba(31, 122, 58, 0.40);
+  background: linear-gradient(180deg, rgba(31, 122, 58, 0.14), rgba(231, 221, 204, 0.82));
+  color: var(--risk-low);
 }
 
 .pill.review {
-  border-color: rgba(211, 161, 90, 0.55);
-  background: linear-gradient(180deg, rgba(211, 161, 90, 0.34), rgba(231, 221, 204, 0.78));
-  color: var(--brown-dark);
+  border-color: rgba(183, 121, 31, 0.55);
+  background: linear-gradient(180deg, rgba(183, 121, 31, 0.18), rgba(231, 221, 204, 0.82));
+  color: var(--risk-mid);
 }
 
 .pill.reject {
-  border-color: rgba(139, 90, 43, 0.55);
-  background: linear-gradient(180deg, rgba(139, 90, 43, 0.24), rgba(231, 221, 204, 0.78));
-  color: var(--brown-dark);
+  border-color: rgba(184, 50, 42, 0.55);
+  background: linear-gradient(180deg, rgba(184, 50, 42, 0.16), rgba(231, 221, 204, 0.82));
+  color: var(--risk-high);
 }
 
 .list {

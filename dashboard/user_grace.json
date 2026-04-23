@@ -1,0 +1,18 @@
+{
+  "applicantName": "Grace Hopper",
+  "applicantAgeYears": 36,
+  "monthlyIncome": 4200,
+  "requestedAmount": 800,
+  "employmentStatus": "Empleada",
+  "monthsAtJob": 48,
+  "country": "AR",
+  "currency": "ARS",
+  "assessment": {
+    "score": 22,
+    "decision": "approve",
+    "summary": "Buen perfil general, ingresos consistentes y monto solicitado bajo.",
+    "flags": [],
+    "reasons": ["Ingresos consistentes.", "Monto solicitado bajo."]
+  }
+}
+

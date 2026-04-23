@@ -3,6 +3,11 @@ function setText(id, text) {
   if (el) el.textContent = text ?? "—";
 }
 
+function setExpanded(el, expanded) {
+  if (!el) return;
+  el.setAttribute("aria-expanded", expanded ? "true" : "false");
+}
+
 function setList(id, items, mapItem) {
   const ul = document.getElementById(id);
   if (!ul) return;
@@ -50,6 +55,16 @@ function toRiskBandEs(score, decision) {
   return "Riesgo alto";
 }
 
+function toRiskLevel(score, decision) {
+  if (decision === "approve") return "low";
+  if (decision === "review") return "medium";
+  if (decision === "reject") return "high";
+  if (typeof score !== "number" || Number.isNaN(score)) return null;
+  if (score <= 35) return "low";
+  if (score <= 70) return "medium";
+  return "high";
+}
+
 function normalizeSummaryEs(summary, decision, score) {
   if (!summary) return "—";
   let s = String(summary);
@@ -58,11 +73,14 @@ function normalizeSummaryEs(summary, decision, score) {
   s = s.replace(/\bREJECT\b/g, "RECHAZADO");
   s = s.replace(/score=/gi, "puntaje=");
 
-  // If the agent didn't include decision/score in the text, add a clear prefix.
-  const d = toDecisionLabelEs(decision);
-  const prefix = `Decisión: ${d}${typeof score === "number" ? ` • Puntaje: ${score}` : ""}. `;
-  if (!/^decisión:/i.test(s)) return prefix + s;
-  return s;
+  // Remove common technical prefixes like: "REVISIÓN (puntaje=55): ..."
+  s = s.replace(/^(APROBADO|REVISIÓN|RECHAZADO)\s*\([^)]*\)\s*:\s*/i, "");
+  s = s.replace(/^(APROBADO|REVISIÓN|RECHAZADO)\s*:\s*/i, "");
+
+  // If it's still very short/empty, fallback to a clear statement.
+  const cleaned = s.trim();
+  if (!cleaned) return "—";
+  return cleaned;
 }
 
 function flagToLabelEs(flag) {
@@ -92,16 +110,106 @@ function setOptionalField(id, value) {
   if (!isEmpty) el.textContent = String(value);
 }
 
-async function load() {
-  const res = await fetch("./data.json", { cache: "no-store" });
-  const data = await res.json();
+function getSelectedUserId() {
+  const url = new URL(window.location.href);
+  const fromUrl = url.searchParams.get("user");
+  if (fromUrl) return fromUrl;
+  try {
+    const fromStorage = window.localStorage.getItem("selected_user");
+    return fromStorage || null;
+  } catch {
+    return null;
+  }
+}
 
+function setSelectedUserId(id) {
+  try {
+    if (id) window.localStorage.setItem("selected_user", id);
+  } catch {}
+  const url = new URL(window.location.href);
+  if (id) url.searchParams.set("user", id);
+  window.history.replaceState({}, "", url.toString());
+}
+
+async function loadUsersIndex() {
+  // Optional. If it doesn't exist, we fallback to a single default user (data.json).
+  try {
+    const res = await fetch("./users.json", { cache: "no-store" });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!data || !Array.isArray(data.users)) return null;
+    return data.users;
+  } catch {
+    return null;
+  }
+}
+
+function openMenu(menu, trigger) {
+  if (!menu || !trigger) return;
+  menu.classList.add("open");
+  setExpanded(trigger, true);
+}
+
+function closeMenu(menu, trigger) {
+  if (!menu || !trigger) return;
+  menu.classList.remove("open");
+  setExpanded(trigger, false);
+}
+
+function isMenuOpen(menu) {
+  return !!menu && menu.classList.contains("open");
+}
+
+function renderUserMenu(users, onSelect) {
+  const menu = document.getElementById("applicantMenu");
+  if (!menu) return;
+  menu.innerHTML = "";
+
+  for (const u of users) {
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "menuItem";
+    btn.setAttribute("role", "option");
+    btn.textContent = u?.label ?? u?.id ?? "Usuario";
+
+    const sub = u?.subtitle ? document.createElement("span") : null;
+    if (sub) {
+      sub.className = "sub";
+      sub.textContent = u.subtitle;
+      btn.appendChild(sub);
+    }
+
+    btn.addEventListener("click", () => onSelect(u));
+    menu.appendChild(btn);
+  }
+}
+
+async function loadAssessmentJson(path) {
+  const res = await fetch(path, { cache: "no-store" });
+  if (!res.ok) throw new Error(`HTTP ${res.status} loading ${path}`);
+  return await res.json();
+}
+
+function applyDashboardData(data) {
   setText("applicantName", data?.applicantName);
   const score = typeof data?.assessment?.score === "number" ? data.assessment.score : Number(data?.assessment?.score);
   const decision = data?.assessment?.decision;
+  const riskLevel = toRiskLevel(Number.isFinite(score) ? score : undefined, decision);
+  const riskBand = toRiskBandEs(Number.isFinite(score) ? score : undefined, decision);
 
   setText("score", Number.isFinite(score) ? String(score) : "—");
-  setText("scoreContext", toRiskBandEs(Number.isFinite(score) ? score : undefined, decision));
+  setText("scoreContext", riskBand);
+  setText("generalStatus", riskBand);
+
+  const scoreCtx = document.getElementById("scoreContext");
+  if (scoreCtx) scoreCtx.className = `scoreContext${riskLevel ? ` ${riskLevel}` : ""}`;
+
+  const status = document.getElementById("generalStatus");
+  if (status) status.className = `statusChip${riskLevel ? ` ${riskLevel}` : ""}`;
+
+  const decisionEl = document.getElementById("decisionText");
+  if (decisionEl) decisionEl.className = `decisionText${decision ? ` ${decision}` : ""}`;
+
   setText("decisionText", toDecisionLabelEs(decision));
   setText("summary", normalizeSummaryEs(data?.assessment?.summary, decision, Number.isFinite(score) ? score : undefined));
   setDecisionPill(data?.assessment?.decision);
@@ -109,7 +217,7 @@ async function load() {
   setList("reasons", data?.assessment?.reasons);
   setList("flags", data?.assessment?.flags, flagToLabelEs);
 
-  // Optional applicant context (only shown if present in data.json)
+  // Optional applicant context (only shown if present in selected user JSON)
   setOptionalField("applicantAgeYears", data?.applicantAgeYears);
   setOptionalField("monthlyIncome", data?.monthlyIncome);
   setOptionalField("requestedAmount", data?.requestedAmount);
@@ -125,6 +233,52 @@ async function load() {
     const anyVisible = Array.from(fields).some((n) => n.style.display !== "none");
     details.style.display = anyVisible ? "" : "none";
   }
+}
+
+async function load() {
+  const trigger = document.getElementById("applicantTrigger");
+  const menu = document.getElementById("applicantMenu");
+
+  const users = (await loadUsersIndex()) ?? [
+    { id: "default", label: "Ada Lovelace", subtitle: "Ejemplo", dataPath: "./data.json" }
+  ];
+
+  const selectedId = getSelectedUserId() ?? users[0]?.id ?? "default";
+  let selected = users.find((u) => u?.id === selectedId) ?? users[0];
+
+  const loadAndRender = async (u) => {
+    const path = u?.dataPath ?? "./data.json";
+    const data = await loadAssessmentJson(path);
+    applyDashboardData(data);
+  };
+
+  renderUserMenu(users, async (u) => {
+    selected = u;
+    setSelectedUserId(u?.id);
+    closeMenu(menu, trigger);
+    await loadAndRender(u);
+  });
+
+  if (trigger && menu) {
+    setExpanded(trigger, false);
+    trigger.addEventListener("click", () => {
+      if (isMenuOpen(menu)) closeMenu(menu, trigger);
+      else openMenu(menu, trigger);
+    });
+
+    document.addEventListener("click", (e) => {
+      const dd = document.getElementById("applicantDropdown");
+      if (!dd) return;
+      if (!dd.contains(e.target)) closeMenu(menu, trigger);
+    });
+
+    document.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") closeMenu(menu, trigger);
+    });
+  }
+
+  // Initial render
+  await loadAndRender(selected);
 }
 
 load().catch((e) => {

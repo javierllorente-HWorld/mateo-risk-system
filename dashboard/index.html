@@ -15,6 +15,10 @@
 
       <section class="card" id="app">
         <div class="hero">
+          <div class="statusRow">
+            <div class="label">Estado general</div>
+            <div class="statusChip" id="generalStatus">—</div>
+          </div>
           <div class="heroTop">
             <div>
               <div class="label">Decisión</div>
@@ -32,7 +36,13 @@
             </div>
             <div class="metaItem">
               <div class="label">Solicitante</div>
-              <div class="metaValue" id="applicantName">—</div>
+              <div class="dropdown" id="applicantDropdown">
+                <button class="dropdownTrigger" id="applicantTrigger" type="button" aria-haspopup="listbox" aria-expanded="false">
+                  <span class="metaValue" id="applicantName">—</span>
+                  <span class="chevron" aria-hidden="true">▾</span>
+                </button>
+                <div class="dropdownMenu" id="applicantMenu" role="listbox" aria-label="Elegir solicitante"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -40,10 +50,6 @@
         <section class="subcard" id="applicantDetails">
           <div class="subcardTitle">Datos del solicitante</div>
           <div class="detailsGrid">
-            <div class="detail" data-field>
-              <div class="label">Edad</div>
-              <div class="value" id="applicantAgeYears">—</div>
-            </div>
             <div class="detail" data-field>
               <div class="label">Ingreso mensual</div>
               <div class="value" id="monthlyIncome">—</div>
@@ -57,12 +63,8 @@
               <div class="value" id="employmentStatus">—</div>
             </div>
             <div class="detail" data-field>
-              <div class="label">Antigüedad</div>
+              <div class="label">Antigüedad laboral</div>
               <div class="value" id="monthsAtJob">—</div>
-            </div>
-            <div class="detail" data-field>
-              <div class="label">País / moneda</div>
-              <div class="value" id="countryCurrency">—</div>
             </div>
           </div>
         </section>
