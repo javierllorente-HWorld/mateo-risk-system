@@ -83,6 +83,7 @@ main.container.workspaceLayout {
   grid-template-columns: minmax(232px, 26%) minmax(0, 1fr);
   gap: 18px;
   align-items: start;
+  overflow: visible;
 }
 
 .masterPanel {
@@ -271,6 +272,7 @@ main.container.workspaceLayout {
 
 .detailPane {
   min-width: 0;
+  overflow: visible;
 }
 
 .entityNameValue {
@@ -444,6 +446,7 @@ main.container.workspaceLayout {
   background: linear-gradient(180deg, rgba(243, 235, 221, 0.92), rgba(231, 221, 204, 0.92));
   box-shadow: var(--shadow);
   backdrop-filter: blur(6px);
+  overflow: visible;
 }
 
 .muted {
@@ -454,6 +457,7 @@ main.container.workspaceLayout {
 .hero {
   padding-bottom: 14px;
   border-bottom: 1px solid rgba(90, 52, 18, 0.12);
+  overflow: visible;
 }
 
 .heroTop {
@@ -461,6 +465,7 @@ main.container.workspaceLayout {
   align-items: flex-start;
   justify-content: space-between;
   gap: 12px;
+  overflow: visible;
 }
 
 .label {
@@ -508,7 +513,8 @@ main.container.workspaceLayout {
 .decisionDropdown {
   position: relative;
   align-self: flex-start;
-  z-index: 4;
+  flex-shrink: 0;
+  z-index: 20;
 }
 
 .decisionPillTrigger {
@@ -516,23 +522,24 @@ main.container.workspaceLayout {
   align-items: center;
   justify-content: space-between;
   gap: 8px;
-  min-width: 148px;
+  min-width: 158px;
+  max-width: 100%;
   cursor: pointer;
   color: inherit;
   font: inherit;
   text-align: left;
 }
 
+#decisionPillLabel {
+  flex: 1 1 auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
 .decisionPillTrigger:focus-visible {
   outline: none;
   box-shadow: var(--ring);
-}
-
-.dropdown.decisionDropdown .dropdownMenu.decisionDropdownMenu {
-  left: auto;
-  right: 0;
-  min-width: 100%;
-  white-space: nowrap;
 }
 
 .pill.approve {
@@ -711,6 +718,29 @@ main.container.workspaceLayout {
 .menuItem:focus-visible {
   outline: none;
   box-shadow: var(--ring);
+}
+
+/* Decision estado: menú alineado al trigger, por encima del resto de la card */
+.dropdown.decisionDropdown .dropdownMenu.decisionDropdownMenu {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  left: auto;
+  width: max(100%, 12.75rem);
+  min-width: 12.75rem;
+  max-width: min(17rem, calc(100vw - 32px));
+  margin: 0;
+  padding: 6px;
+  z-index: 200;
+  box-sizing: border-box;
+}
+
+.dropdown.decisionDropdown .dropdownMenu.decisionDropdownMenu .menuItem {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
+  white-space: nowrap;
+  padding: 10px 12px;
 }
 
 /* Subcard + lists */
