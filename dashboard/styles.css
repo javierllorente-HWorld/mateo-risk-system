@@ -85,30 +85,36 @@ main.container {
 .heroInner {
   position: relative;
   z-index: 1;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  column-gap: 42px;
-  row-gap: 18px;
-  align-items: start;
+  display: block;
 }
 
-.heroCopy {
-  padding-top: 2px;
-}
-
-.heroTitleRow {
+.heroFrame {
+  width: 100%;
   display: grid;
-  grid-template-columns: var(--hero-icon-size) 1fr;
+  grid-template-columns: auto 1fr auto;
   align-items: center;
-  column-gap: var(--hero-text-gap);
-  margin: 6px 0 6px 0;
+  column-gap: 18px;
 }
 
-.heroTextBlock {
-  display: flex;
-  flex-direction: column;
-  gap: 6px;
+.heroBlock {
   min-width: 0;
+  display: flex;
+  align-items: center;
+}
+
+.heroBlockLeft {
+  justify-content: flex-start;
+}
+
+.heroBlockCenter {
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 6px;
+}
+
+.heroBlockRight {
+  justify-content: flex-end;
 }
 
 .heroIcon {
