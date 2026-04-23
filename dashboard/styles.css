@@ -19,6 +19,9 @@
   --risk-low: #1f7a3a;
   --risk-mid: #b7791f;
   --risk-high: #b8322a;
+
+  --hero-icon-size: 56px;
+  --hero-text-gap: 12px;
 }
 
 * {
@@ -75,15 +78,16 @@ body {
 }
 
 .heroTitleRow {
-  display: flex;
+  display: grid;
+  grid-template-columns: var(--hero-icon-size) 1fr;
   align-items: center;
-  gap: 12px;
+  column-gap: var(--hero-text-gap);
   margin: 6px 0 6px 0;
 }
 
 .heroIcon {
-  width: 56px;
-  height: 56px;
+  width: var(--hero-icon-size);
+  height: var(--hero-icon-size);
   border-radius: 14px;
   display: grid;
   place-items: center;
@@ -108,6 +112,7 @@ body {
 
 .heroSubtitle {
   margin: 0;
+  margin-left: calc(var(--hero-icon-size) + var(--hero-text-gap));
   max-width: 60ch;
   font-size: 16px;
   font-weight: 400;
