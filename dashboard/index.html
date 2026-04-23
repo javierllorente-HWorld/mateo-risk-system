@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Applicant Risk Dashboard</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <header class="header">
+        <h1>Applicant Risk Dashboard</h1>
+        <p class="muted">Vista simple de evaluación de riesgo.</p>
+      </header>
+
+      <section class="card" id="app">
+        <div class="row">
+          <div>
+            <div class="label">Applicant</div>
+            <div class="value" id="applicantName">—</div>
+          </div>
+          <div class="pill" id="decisionPill">—</div>
+        </div>
+
+        <div class="grid">
+          <div class="field">
+            <div class="label">Score</div>
+            <div class="value" id="score">—</div>
+          </div>
+          <div class="field">
+            <div class="label">Decision</div>
+            <div class="value" id="decision">—</div>
+          </div>
+        </div>
+
+        <div class="field">
+          <div class="label">Summary</div>
+          <div class="value" id="summary">—</div>
+        </div>
+
+        <div class="field">
+          <div class="label">Flags</div>
+          <ul class="list" id="flags"></ul>
+        </div>
+      </section>
+
+      <footer class="footer muted">
+        Datos desde <code>dashboard/data.json</code>.
+      </footer>
+    </main>
+
+    <script type="module" src="./main.js"></script>
+  </body>
+</html>
+

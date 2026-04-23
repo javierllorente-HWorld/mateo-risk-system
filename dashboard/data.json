@@ -1,0 +1,11 @@
+{
+  "applicantName": "Ada Lovelace",
+  "assessment": {
+    "score": 55,
+    "decision": "review",
+    "summary": "REVIEW (score=55): Monto solicitado alto. Poca antigüedad laboral.",
+    "flags": ["requested_amount_high", "short_job_tenure"],
+    "reasons": ["Monto solicitado alto.", "Poca antigüedad laboral."]
+  }
+}
+
