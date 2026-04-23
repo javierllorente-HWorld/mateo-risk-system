@@ -14,32 +14,71 @@
       </header>
 
       <section class="card" id="app">
-        <div class="row">
-          <div>
-            <div class="label">Solicitante</div>
-            <div class="value" id="applicantName">—</div>
+        <div class="hero">
+          <div class="heroTop">
+            <div>
+              <div class="label">Decisión</div>
+              <div class="decisionText" id="decisionText">—</div>
+            </div>
+            <div class="pill decisionPill" id="decisionPill">—</div>
           </div>
-          <div class="pill" id="decisionPill">—</div>
+          <div class="heroMeta">
+            <div class="metaItem">
+              <div class="label">Puntaje</div>
+              <div class="metaValue">
+                <span class="scoreValue" id="score">—</span>
+                <span class="scoreContext" id="scoreContext">—</span>
+              </div>
+            </div>
+            <div class="metaItem">
+              <div class="label">Solicitante</div>
+              <div class="metaValue" id="applicantName">—</div>
+            </div>
+          </div>
         </div>
 
-        <div class="grid">
-          <div class="field">
-            <div class="label">Puntaje</div>
-            <div class="value" id="score">—</div>
+        <section class="subcard" id="applicantDetails">
+          <div class="subcardTitle">Datos del solicitante</div>
+          <div class="detailsGrid">
+            <div class="detail" data-field>
+              <div class="label">Edad</div>
+              <div class="value" id="applicantAgeYears">—</div>
+            </div>
+            <div class="detail" data-field>
+              <div class="label">Ingreso mensual</div>
+              <div class="value" id="monthlyIncome">—</div>
+            </div>
+            <div class="detail" data-field>
+              <div class="label">Monto solicitado</div>
+              <div class="value" id="requestedAmount">—</div>
+            </div>
+            <div class="detail" data-field>
+              <div class="label">Empleo</div>
+              <div class="value" id="employmentStatus">—</div>
+            </div>
+            <div class="detail" data-field>
+              <div class="label">Antigüedad</div>
+              <div class="value" id="monthsAtJob">—</div>
+            </div>
+            <div class="detail" data-field>
+              <div class="label">País / moneda</div>
+              <div class="value" id="countryCurrency">—</div>
+            </div>
           </div>
-          <div class="field">
-            <div class="label">Decisión</div>
-            <div class="value" id="decision">—</div>
-          </div>
-        </div>
+        </section>
 
         <div class="field">
           <div class="label">Resumen</div>
-          <div class="value" id="summary">—</div>
+          <div class="value summary" id="summary">—</div>
         </div>
 
         <div class="field">
-          <div class="label">Alertas</div>
+          <div class="label">Motivos</div>
+          <ul class="list" id="reasons"></ul>
+        </div>
+
+        <div class="field">
+          <div class="label">Señales de riesgo</div>
           <ul class="list" id="flags"></ul>
         </div>
       </section>

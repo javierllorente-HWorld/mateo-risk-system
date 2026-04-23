@@ -18,6 +18,7 @@
   --shadow-soft: 0 8px 18px rgba(90, 52, 18, 0.10);
 
   --radius: 14px;
+  --ring: 0 0 0 4px rgba(211, 161, 90, 0.28);
 }
 
 * {
@@ -67,6 +68,71 @@ body {
   backdrop-filter: blur(6px);
 }
 
+.hero {
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(90, 52, 18, 0.12);
+}
+
+.heroTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.decisionText {
+  margin-top: 6px;
+  font-size: 28px;
+  line-height: 1.05;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: var(--brown-dark);
+}
+
+.decisionPill {
+  padding: 10px 14px;
+  font-size: 13px;
+  border-width: 1px;
+}
+
+.heroMeta {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.metaItem {
+  padding: 12px 12px;
+  border-radius: 12px;
+  background: rgba(216, 199, 174, 0.35);
+  border: 1px solid rgba(90, 52, 18, 0.10);
+}
+
+.metaValue {
+  margin-top: 6px;
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+  font-size: 16px;
+  color: rgba(42, 26, 16, 0.94);
+}
+
+.scoreValue {
+  font-weight: 700;
+  color: var(--brown-dark);
+}
+
+.scoreContext {
+  font-size: 13px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid rgba(90, 52, 18, 0.14);
+  background: rgba(231, 221, 204, 0.70);
+  color: rgba(90, 52, 18, 0.88);
+}
+
 .row {
   display: flex;
   align-items: center;
@@ -96,6 +162,37 @@ body {
 
 .field {
   margin-top: 14px;
+}
+
+.subcard {
+  margin-top: 14px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid rgba(90, 52, 18, 0.12);
+  background: rgba(243, 235, 221, 0.55);
+}
+
+.subcardTitle {
+  font-weight: 650;
+  color: var(--brown-dark);
+  letter-spacing: 0.2px;
+  margin-bottom: 10px;
+}
+
+.detailsGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.detail .value {
+  font-size: 15px;
+}
+
+.summary {
+  font-size: 15px;
+  line-height: 1.35;
+  color: rgba(42, 26, 16, 0.94);
 }
 
 .pill {
@@ -134,6 +231,7 @@ body {
 
 .list li {
   color: rgba(42, 26, 16, 0.92);
+  margin: 6px 0;
 }
 
 .list li::marker {
@@ -151,6 +249,18 @@ code {
   background: rgba(216, 199, 174, 0.70);
   border: 1px solid rgba(90, 52, 18, 0.14);
   color: var(--brown-dark);
+}
+
+@media (max-width: 720px) {
+  .heroMeta {
+    grid-template-columns: 1fr;
+  }
+  .detailsGrid {
+    grid-template-columns: 1fr;
+  }
+  .decisionText {
+    font-size: 24px;
+  }
 }
 
 @media (prefers-reduced-motion: no-preference) {
