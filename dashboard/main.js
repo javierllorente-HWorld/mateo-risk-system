@@ -371,14 +371,14 @@ function syncMasterPanelChrome(mode) {
   if (mode === "pyme") {
     if (title) title.textContent = "Empresas";
     if (search) {
-      search.placeholder = "Buscar empresa…";
+      search.placeholder = "Buscar...";
       search.setAttribute("aria-label", "Buscar empresa");
     }
     if (list) list.setAttribute("aria-label", "Lista de empresas");
   } else {
     if (title) title.textContent = "Solicitantes";
     if (search) {
-      search.placeholder = "Buscar solicitante…";
+      search.placeholder = "Buscar...";
       search.setAttribute("aria-label", "Buscar solicitante");
     }
     if (list) list.setAttribute("aria-label", "Lista de solicitantes");

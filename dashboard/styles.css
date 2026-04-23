@@ -102,24 +102,64 @@ main.container.workspaceLayout {
   margin-bottom: 10px;
 }
 
-.masterSearchInput {
+.masterSearchWrap {
+  display: flex;
+  align-items: center;
+  gap: 8px;
   width: 100%;
-  padding: 9px 10px;
+  margin-bottom: 10px;
+  padding: 0 10px 0 10px;
+  min-height: 40px;
   border-radius: 12px;
   border: 1px solid rgba(90, 52, 18, 0.14);
-  background: rgba(231, 221, 204, 0.55);
+  background: #fff;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65), 0 1px 2px rgba(90, 52, 18, 0.06);
+}
+
+.masterSearchWrap:focus-within {
+  outline: none;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.65), 0 1px 2px rgba(90, 52, 18, 0.06), var(--ring);
+}
+
+.masterSearchIcon {
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  color: rgba(90, 52, 18, 0.48);
+  margin-top: 1px;
+}
+
+.masterSearchIcon svg {
+  width: 18px;
+  height: 18px;
+  display: block;
+}
+
+.masterSearchInput {
+  flex: 1 1 auto;
+  min-width: 0;
+  width: 100%;
+  margin: 0;
+  padding: 10px 8px 10px 0;
+  border: none;
+  border-radius: 0;
+  background: transparent;
   color: rgba(42, 26, 16, 0.94);
   font: inherit;
-  margin-bottom: 10px;
+  font-size: 14px;
+  line-height: 1.35;
 }
 
 .masterSearchInput::placeholder {
-  color: rgba(90, 52, 18, 0.55);
+  color: rgba(90, 52, 18, 0.48);
+  opacity: 1;
 }
 
-.masterSearchInput:focus-visible {
+.masterSearchInput:focus {
   outline: none;
-  box-shadow: var(--ring);
 }
 
 .masterList {
