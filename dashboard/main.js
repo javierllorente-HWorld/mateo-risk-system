@@ -306,7 +306,6 @@ function getEntityListMeta(raw, analysisMode) {
   const riskLevel = toRiskLevel(finiteScore, undefined);
   const riskLabel = toRiskBandEs(finiteScore, undefined);
   return {
-    scoreLabel: Number.isFinite(score) ? String(score) : "—",
     riskLevel,
     riskLabel: riskLabel && riskLabel !== "—" ? riskLabel : "—"
   };
@@ -327,7 +326,7 @@ function renderMasterList(entities, selectedId, onSelect, metaById) {
 
   for (const entity of entities) {
     const id = entity?.id ?? "";
-    const meta = metaById?.get(id) ?? { scoreLabel: "—", riskLevel: null, riskLabel: "—" };
+    const meta = metaById?.get(id) ?? { riskLevel: null, riskLabel: "—" };
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "masterCard";
@@ -336,17 +335,10 @@ function renderMasterList(entities, selectedId, onSelect, metaById) {
     btn.setAttribute("aria-selected", isActive ? "true" : "false");
     if (isActive) btn.classList.add("is-active");
 
-    const top = document.createElement("div");
-    top.className = "masterCardTop";
     const nameEl = document.createElement("span");
     nameEl.className = "masterCardName";
     nameEl.textContent = entity?.label ?? id ?? "—";
-    const scoreEl = document.createElement("span");
-    scoreEl.className = "masterCardScore";
-    scoreEl.textContent = meta.scoreLabel;
-    top.appendChild(nameEl);
-    top.appendChild(scoreEl);
-    btn.appendChild(top);
+    btn.appendChild(nameEl);
 
     const pill = document.createElement("span");
     pill.className = "masterCardPill";
@@ -485,7 +477,7 @@ async function load() {
       const raw = await loadAssessmentJson(u?.dataPath ?? "./data.json");
       personaMetaById.set(uid, getEntityListMeta(raw, "persona"));
     } catch {
-      personaMetaById.set(uid, { scoreLabel: "—", riskLevel: null, riskLabel: "—" });
+      personaMetaById.set(uid, { riskLevel: null, riskLabel: "—" });
     }
   }
 
@@ -496,7 +488,7 @@ async function load() {
       const raw = await loadAssessmentJson(c?.dataPath ?? "./company_hopper_labs.json");
       pymeMetaById.set(cid, getEntityListMeta(raw, "pyme"));
     } catch {
-      pymeMetaById.set(cid, { scoreLabel: "—", riskLevel: null, riskLabel: "—" });
+      pymeMetaById.set(cid, { riskLevel: null, riskLabel: "—" });
     }
   }
 

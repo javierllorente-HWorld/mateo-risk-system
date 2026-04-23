@@ -56,15 +56,15 @@ body {
 .heroBar {
   position: relative;
   overflow: hidden;
-  padding: 32px 0 24px 0;
+  padding: 14px 0 12px;
   color: #f3e4cf;
   background: #6b3a10;
   box-shadow: none;
+  --hero-icon-size: 48px;
 }
 
 .heroBar .container {
-  /* Keep hero content positioned as before */
-  margin-top: 16px;
+  margin-top: 4px;
   margin-bottom: 0;
 }
 
@@ -212,28 +212,12 @@ main.container.workspaceLayout {
   box-shadow: 0 6px 16px rgba(90, 52, 18, 0.10);
 }
 
-.masterCardTop {
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-  gap: 10px;
-}
-
 .masterCardName {
-  flex: 1 1 auto;
-  min-width: 0;
+  display: block;
+  width: 100%;
   font-size: 14px;
   font-weight: 650;
   line-height: 1.25;
-  color: var(--brown-dark);
-}
-
-.masterCardScore {
-  flex-shrink: 0;
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 1;
-  letter-spacing: 0.02em;
   color: var(--brown-dark);
 }
 
@@ -370,7 +354,7 @@ main.container.workspaceLayout {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  column-gap: 18px;
+  column-gap: 14px;
   margin-top: 0;
 }
 
@@ -388,7 +372,7 @@ main.container.workspaceLayout {
   flex-direction: column;
   align-items: flex-start;
   justify-content: center;
-  gap: 6px;
+  gap: 3px;
 }
 
 .heroBlockRight {
@@ -409,6 +393,11 @@ main.container.workspaceLayout {
 .heroIcon svg {
   width: 26px;
   height: 26px;
+}
+
+.heroBar .heroIcon svg {
+  width: 22px;
+  height: 22px;
 }
 
 .heroTitle {
@@ -439,6 +428,15 @@ main.container.workspaceLayout {
   align-self: start;
   margin-top: 6px;
   margin-right: 6px;
+}
+
+.heroBar .heroMateo {
+  width: 72px;
+  height: 72px;
+  border-radius: 14px;
+  align-self: center;
+  margin-top: 0;
+  margin-right: 4px;
 }
 
 /* === CONTENT CARD (do not change visual intent) === */
