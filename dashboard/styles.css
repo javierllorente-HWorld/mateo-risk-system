@@ -56,7 +56,7 @@ body {
 .heroBar {
   position: relative;
   overflow: hidden;
-  padding: 32px 0 56px 0;
+  padding: 32px 0 24px 0;
   color: #f3e4cf;
   background: #6b3a10;
   box-shadow: none;
@@ -70,8 +70,63 @@ body {
 
 main.container {
   /* Separate main layout spacing from hero */
-  margin-top: 18px;
+  margin-top: 16px;
   margin-bottom: 28px;
+}
+
+.analysisBar {
+  padding: 12px 0;
+}
+
+.analysisInner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.analysisLabel {
+  font-size: 13px;
+  color: rgba(90, 52, 18, 0.72);
+  letter-spacing: 0.02em;
+}
+
+.segmented {
+  display: inline-flex;
+  align-items: center;
+  gap: 0;
+  padding: 4px;
+  border-radius: 999px;
+  background: rgba(231, 221, 204, 0.70);
+  border: 1px solid rgba(90, 52, 18, 0.14);
+  box-shadow: 0 8px 18px rgba(90, 52, 18, 0.08);
+}
+
+.segmentedInput {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.segmentedOption {
+  padding: 8px 14px;
+  border-radius: 999px;
+  cursor: pointer;
+  user-select: none;
+  font-size: 14px;
+  color: rgba(42, 26, 16, 0.88);
+  transition: background 140ms ease, color 140ms ease, box-shadow 140ms ease;
+}
+
+.segmentedInput:checked + .segmentedOption {
+  background: rgba(243, 235, 221, 0.92);
+  color: rgba(42, 26, 16, 0.96);
+  box-shadow: 0 10px 24px rgba(90, 52, 18, 0.10);
+}
+
+.segmentedOption:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
 }
 
 .heroBar::before {
@@ -166,10 +221,7 @@ main.container {
 
 /* === CONTENT CARD (do not change visual intent) === */
 .card {
-  /* Lift card up to overlap hero */
-  margin-top: -48px;
-  position: relative;
-  z-index: 2;
+  margin-top: 0;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 18px;
