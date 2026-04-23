@@ -1,8 +1,9 @@
 /* MATEO-inspired palette */
 :root {
+  
   --brown-dark: #5a3412;
   --brown-medium: #8b5a2b;
-  --brown-primary: #99652e;
+  --brown-primary: #fdead6;
   --beige-light: #e7ddcc;
   --beige-medium: #d8c7ae;
   --cream-soft: #f3ebdd;
@@ -46,7 +47,8 @@ body {
 
 .container {
   max-width: 860px;
-  margin: 28px auto;
+  /* Base container should not impose vertical spacing */
+  margin: 0 auto;
   padding: 0 18px;
 }
 
@@ -54,10 +56,22 @@ body {
 .heroBar {
   position: relative;
   overflow: hidden;
-  padding: 32px 0 20px 0;
+  padding: 32px 0 12px 0;
   color: #f3e4cf;
   background: #6b3a10;
   box-shadow: none;
+}
+
+.heroBar .container {
+  /* Keep hero content positioned as before */
+  margin-top: 28px;
+  margin-bottom: 0;
+}
+
+main.container {
+  /* Separate main layout spacing from hero */
+  margin-top: 18px;
+  margin-bottom: 28px;
 }
 
 .heroBar::before {
@@ -146,7 +160,7 @@ body {
 /* === CONTENT CARD (do not change visual intent) === */
 .card {
   /* Lift card up to overlap hero */
-  margin-top: -22px;
+  margin-top: -40px;
   position: relative;
   z-index: 2;
   border: 1px solid var(--border);
