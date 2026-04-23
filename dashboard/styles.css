@@ -21,7 +21,7 @@
   --risk-high: #b8322a;
 
   --hero-icon-size: 56px;
-  --hero-text-gap: 12px;
+  --hero-text-gap: 14px;
 }
 
 * {
@@ -85,6 +85,13 @@ body {
   margin: 6px 0 6px 0;
 }
 
+.heroTextBlock {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
 .heroIcon {
   width: var(--hero-icon-size);
   height: var(--hero-icon-size);
@@ -112,7 +119,6 @@ body {
 
 .heroSubtitle {
   margin: 0;
-  margin-left: calc(var(--hero-icon-size) + var(--hero-text-gap));
   max-width: 60ch;
   font-size: 16px;
   font-weight: 400;
