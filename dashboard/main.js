@@ -110,6 +110,21 @@ function setOptionalField(id, value) {
   if (!isEmpty) el.textContent = String(value);
 }
 
+function formatMoney(value) {
+  if (value === undefined || value === null || value === "") return null;
+  const n = typeof value === "number" ? value : Number(value);
+  if (!Number.isFinite(n)) return null;
+  // Always show "$" as requested; keep it simple and readable.
+  return `$${n.toLocaleString("es-AR")}`;
+}
+
+function setOptionalMoneyField(id, value) {
+  const formatted = formatMoney(value);
+  // If it's not a number, fall back to default display behavior.
+  if (formatted === null) return setOptionalField(id, value);
+  return setOptionalField(id, formatted);
+}
+
 function getSelectedUserId() {
   const url = new URL(window.location.href);
   const fromUrl = url.searchParams.get("user");
@@ -219,8 +234,8 @@ function applyDashboardData(data) {
 
   // Optional applicant context (only shown if present in selected user JSON)
   setOptionalField("applicantAgeYears", data?.applicantAgeYears);
-  setOptionalField("monthlyIncome", data?.monthlyIncome);
-  setOptionalField("requestedAmount", data?.requestedAmount);
+  setOptionalMoneyField("monthlyIncome", data?.monthlyIncome);
+  setOptionalMoneyField("requestedAmount", data?.requestedAmount);
   setOptionalField("employmentStatus", data?.employmentStatus);
   setOptionalField("monthsAtJob", data?.monthsAtJob);
   const cc =
