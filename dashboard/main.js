@@ -26,10 +26,18 @@ function setDecisionPill(decision) {
   const pill = document.getElementById("decisionPill");
   if (!pill) return;
   pill.className = "pill";
-  pill.textContent = (decision ?? "—").toString().toUpperCase();
+  const label = toDecisionLabelEs(decision);
+  pill.textContent = (label ?? "—").toString().toUpperCase();
   if (decision === "approve" || decision === "review" || decision === "reject") {
     pill.classList.add(decision);
   }
+}
+
+function toDecisionLabelEs(decision) {
+  if (decision === "approve") return "Aprobar";
+  if (decision === "review") return "Revisar";
+  if (decision === "reject") return "Rechazar";
+  return decision ?? "—";
 }
 
 async function load() {
@@ -38,7 +46,7 @@ async function load() {
 
   setText("applicantName", data?.applicantName);
   setText("score", String(data?.assessment?.score ?? "—"));
-  setText("decision", data?.assessment?.decision);
+  setText("decision", toDecisionLabelEs(data?.assessment?.decision));
   setText("summary", data?.assessment?.summary);
   setDecisionPill(data?.assessment?.decision);
   setFlags(data?.assessment?.flags);
