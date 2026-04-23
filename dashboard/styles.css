@@ -36,9 +36,12 @@ body {
 
 body {
   margin: 0;
-  background: radial-gradient(900px 700px at 12% -15%, rgba(211, 161, 90, 0.14), transparent 58%),
-    radial-gradient(900px 700px at 88% -10%, rgba(153, 101, 46, 0.14), transparent 60%),
-    linear-gradient(180deg, rgba(107, 58, 16, 0.98), rgba(90, 47, 12, 0.96) 260px, var(--cream-soft) 260px);
+  background:
+    radial-gradient(900px 700px at 12% -15%, rgba(211, 161, 90, 0.12), transparent 58%),
+    radial-gradient(900px 700px at 88% -10%, rgba(153, 101, 46, 0.12), transparent 60%),
+    /* brown layer that fades smoothly into the cream */
+    linear-gradient(180deg, #7a4517 0%, #6b3a10 40%, #5a2f0c 74%, rgba(90, 47, 12, 0) 100%),
+    var(--cream-soft);
   color: var(--text);
 }
 
@@ -63,9 +66,8 @@ body {
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(620px 360px at 18% 15%, rgba(122, 69, 23, 0.55), transparent 68%),
-    radial-gradient(640px 380px at 78% 10%, rgba(90, 47, 12, 0.40), transparent 72%),
-    linear-gradient(180deg, #7a4517 0%, #6b3a10 40%, #5a2f0c 100%);
+    radial-gradient(620px 360px at 18% 15%, rgba(243, 228, 207, 0.10), transparent 68%),
+    radial-gradient(640px 380px at 78% 10%, rgba(211, 161, 90, 0.10), transparent 72%);
   pointer-events: none;
 }
 
@@ -143,26 +145,15 @@ body {
   font-weight: 400;
 }
 
-/* Top-right decorative square with Mateo logo */
+/* Top-right Mateo logo: it IS the square */
 .heroMateo {
   width: 92px;
   height: 92px;
-  position: relative;
   border-radius: 16px;
-  border: none;
-  background: rgba(243, 228, 207, 0.10);
-  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.24);
-  display: grid;
-  place-items: center;
-  overflow: hidden;
   justify-self: end;
-}
-
-.heroLogoLarge {
-  width: 82%;
-  height: auto;
-  opacity: 0.98;
-  transform: translateY(1px);
+  object-fit: cover;
+  object-position: center;
+  display: block;
 }
 
 .muted {
@@ -284,13 +275,17 @@ body {
   position: relative;
 }
 
+.dropdown .label {
+  margin-bottom: 8px;
+}
+
 .dropdownTrigger {
   width: 100%;
   display: flex;
   align-items: center;
   justify-content: space-between;
   gap: 10px;
-  padding: 8px 10px;
+  padding: 6px 10px;
   border-radius: 12px;
   background: rgba(231, 221, 204, 0.55);
   border: 1px solid rgba(90, 52, 18, 0.14);
@@ -298,6 +293,12 @@ body {
   font: inherit;
   cursor: pointer;
   box-shadow: 0 6px 14px rgba(90, 52, 18, 0.08);
+}
+
+.dropdownTrigger .metaValue {
+  margin-top: 0;
+  display: block;
+  line-height: 1.2;
 }
 
 .dropdownTrigger:focus-visible {
@@ -326,6 +327,29 @@ body {
   backdrop-filter: blur(8px);
 }
 
+.menuSearch {
+  padding: 4px 4px 8px 4px;
+}
+
+.menuSearchInput {
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(90, 52, 18, 0.14);
+  background: rgba(231, 221, 204, 0.55);
+  color: rgba(42, 26, 16, 0.94);
+  font: inherit;
+}
+
+.menuSearchInput::placeholder {
+  color: rgba(90, 52, 18, 0.55);
+}
+
+.menuSearchInput:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}
+
 .dropdownMenu.open {
   display: block;
 }
@@ -350,13 +374,6 @@ body {
 .menuItem:focus-visible {
   outline: none;
   box-shadow: var(--ring);
-}
-
-.menuItem .sub {
-  display: block;
-  margin-top: 4px;
-  font-size: 12px;
-  color: rgba(90, 52, 18, 0.62);
 }
 
 .scoreValue {

@@ -33,9 +33,7 @@
           </div>
           <p class="heroSubtitle">Vista simple para evaluar riesgo.</p>
         </div>
-        <div class="heroMateo" aria-hidden="true">
-          <img class="heroLogo heroLogoLarge" src="./assets/MATEO-LOGO.png" alt="" />
-        </div>
+        <img class="heroMateo" src="./assets/MATEO-LOGO.png" alt="" aria-hidden="true" />
       </div>
     </header>
 
@@ -64,7 +62,19 @@
                   <span class="metaValue" id="applicantName">—</span>
                   <span class="chevron" aria-hidden="true">▾</span>
                 </button>
-                <div class="dropdownMenu" id="applicantMenu" role="listbox" aria-label="Elegir solicitante"></div>
+                <div class="dropdownMenu" id="applicantMenu" role="listbox" aria-label="Elegir solicitante">
+                  <div class="menuSearch">
+                    <input
+                      class="menuSearchInput"
+                      id="applicantSearch"
+                      type="search"
+                      placeholder="Buscar solicitante…"
+                      autocomplete="off"
+                      aria-label="Buscar solicitante"
+                    />
+                  </div>
+                  <div id="applicantMenuItems"></div>
+                </div>
               </div>
             </div>
           </div>

@@ -176,7 +176,7 @@ function isMenuOpen(menu) {
 }
 
 function renderUserMenu(users, onSelect) {
-  const menu = document.getElementById("applicantMenu");
+  const menu = document.getElementById("applicantMenuItems");
   if (!menu) return;
   menu.innerHTML = "";
 
@@ -186,13 +186,6 @@ function renderUserMenu(users, onSelect) {
     btn.className = "menuItem";
     btn.setAttribute("role", "option");
     btn.textContent = u?.label ?? u?.id ?? "Usuario";
-
-    const sub = u?.subtitle ? document.createElement("span") : null;
-    if (sub) {
-      sub.className = "sub";
-      sub.textContent = u.subtitle;
-      btn.appendChild(sub);
-    }
 
     btn.addEventListener("click", () => onSelect(u));
     menu.appendChild(btn);
@@ -253,6 +246,7 @@ function applyDashboardData(data) {
 async function load() {
   const trigger = document.getElementById("applicantTrigger");
   const menu = document.getElementById("applicantMenu");
+  const search = document.getElementById("applicantSearch");
 
   const users = (await loadUsersIndex()) ?? [
     { id: "default", label: "Grace Hopper", subtitle: "Ejemplo", dataPath: "./data.json" }
@@ -267,18 +261,38 @@ async function load() {
     applyDashboardData(data);
   };
 
-  renderUserMenu(users, async (u) => {
+  const onSelectUser = async (u) => {
     selected = u;
     setSelectedUserId(u?.id);
     closeMenu(menu, trigger);
+    if (search) search.value = "";
     await loadAndRender(u);
-  });
+  };
+
+  const renderFiltered = () => {
+    const q = (search?.value ?? "").trim().toLowerCase();
+    const filtered = q
+      ? users.filter((u) => String(u?.label ?? u?.id ?? "").toLowerCase().includes(q))
+      : users;
+    renderUserMenu(filtered, onSelectUser);
+  };
+
+  renderFiltered();
+  if (search) {
+    search.addEventListener("input", renderFiltered);
+  }
 
   if (trigger && menu) {
     setExpanded(trigger, false);
     trigger.addEventListener("click", () => {
       if (isMenuOpen(menu)) closeMenu(menu, trigger);
-      else openMenu(menu, trigger);
+      else {
+        openMenu(menu, trigger);
+        if (search) {
+          search.focus();
+          search.select();
+        }
+      }
     });
 
     document.addEventListener("click", (e) => {
