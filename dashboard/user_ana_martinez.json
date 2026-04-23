@@ -1,0 +1,17 @@
+{
+  "applicantName": "Ana Martínez",
+  "applicantAgeYears": 31,
+  "monthlyIncome": 5800,
+  "requestedAmount": 320000,
+  "employmentStatus": "Administrativa",
+  "monthsAtJob": 36,
+  "country": "AR",
+  "currency": "ARS",
+  "assessment": {
+    "score": 25,
+    "decision": "approve",
+    "summary": "Perfil sólido: ingresos estables y monto solicitado acorde al perfil.",
+    "flags": [],
+    "reasons": ["Ingresos regulares en los últimos doce meses.", "Antigüedad laboral consistente."]
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "applicantName": "AgroPampa Cooperativa Ltda.",
+  "monthlyIncome": 18500000,
+  "requestedAmount": 12000000,
+  "employmentStatus": "Cooperativa agropecuaria / acopio",
+  "monthsAtJob": 120,
+  "country": "AR",
+  "currency": "ARS",
+  "assessment": {
+    "score": 24,
+    "decision": "approve",
+    "summary": "APROBADO: Facturación diversificada y endeudamiento acotado frente a ventas.",
+    "flags": [],
+    "reasons": ["Historial de pagos impecable con bancos.", "Cobertura de ingresos amplia en ventanilla estacional."]
+  }
+}

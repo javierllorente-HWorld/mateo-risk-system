@@ -1,0 +1,17 @@
+{
+  "applicantName": "Carla Duarte",
+  "applicantAgeYears": 27,
+  "monthlyIncome": 2800,
+  "requestedAmount": 5200000,
+  "employmentStatus": "Monotributista",
+  "monthsAtJob": 5,
+  "country": "AR",
+  "currency": "ARS",
+  "assessment": {
+    "score": 82,
+    "decision": "reject",
+    "summary": "RECHAZADO: Endeudamiento proyectado alto y poca antigüedad en la actividad.",
+    "flags": ["requested_amount_high", "short_job_tenure", "high_dti"],
+    "reasons": ["Monto solicitado muy superior a capacidad de pago estimada.", "Menos de un año en la actividad declarada."]
+  }
+}

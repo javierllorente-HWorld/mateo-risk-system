@@ -1,0 +1,16 @@
+{
+  "applicantName": "Delta Logística SA",
+  "monthlyIncome": 8900000,
+  "requestedAmount": 14500000,
+  "employmentStatus": "Transporte de carga y última milla",
+  "monthsAtJob": 72,
+  "country": "AR",
+  "currency": "ARS",
+  "assessment": {
+    "score": 47,
+    "decision": "review",
+    "summary": "REVISIÓN (score=47): Flujo operativo estable pero sensibilidad a costo de combustible.",
+    "flags": ["sector_risk"],
+    "reasons": ["Volatilidad de costos de combustible impacta márgenes.", "Contratos indexados parcialmente."]
+  }
+}

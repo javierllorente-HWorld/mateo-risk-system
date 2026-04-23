@@ -43,8 +43,9 @@ function setDecisionSelector(decision) {
 }
 
 function applyDecisionVisuals(score, decision) {
-  const riskLevel = toRiskLevel(Number.isFinite(score) ? score : undefined, decision);
-  const riskBand = toRiskBandEs(Number.isFinite(score) ? score : undefined, decision);
+  const riskScore = Number.isFinite(score) ? score : undefined;
+  const riskLevel = toRiskLevel(riskScore, undefined);
+  const riskBand = toRiskBandEs(riskScore, undefined);
   const decisionEl = document.getElementById("decisionText");
   if (decisionEl) decisionEl.className = `decisionText${decision ? ` ${decision}` : ""}`;
   setText("decisionText", toDecisionLabelEs(decision));
@@ -57,20 +58,14 @@ function applyDecisionVisuals(score, decision) {
   if (status) status.className = `statusChip${riskLevel ? ` ${riskLevel}` : ""}`;
 }
 
-function toRiskBandEs(score, decision) {
-  if (decision === "approve") return "Riesgo bajo";
-  if (decision === "review") return "Riesgo medio";
-  if (decision === "reject") return "Riesgo alto";
+function toRiskBandEs(score, _decision) {
   if (typeof score !== "number" || Number.isNaN(score)) return "—";
   if (score <= 35) return "Riesgo bajo";
   if (score <= 70) return "Riesgo medio";
   return "Riesgo alto";
 }
 
-function toRiskLevel(score, decision) {
-  if (decision === "approve") return "low";
-  if (decision === "review") return "medium";
-  if (decision === "reject") return "high";
+function toRiskLevel(score, _decision) {
   if (typeof score !== "number" || Number.isNaN(score)) return null;
   if (score <= 35) return "low";
   if (score <= 70) return "medium";
@@ -307,9 +302,9 @@ function buildViewRow(raw, analysisMode) {
 function getEntityListMeta(raw, analysisMode) {
   const data = buildViewRow(raw, analysisMode);
   const score = typeof data?.assessment?.score === "number" ? data.assessment.score : Number(data?.assessment?.score);
-  const decision = data?.assessment?.decision;
-  const riskLevel = toRiskLevel(Number.isFinite(score) ? score : undefined, decision);
-  const riskLabel = toRiskBandEs(Number.isFinite(score) ? score : undefined, decision);
+  const finiteScore = Number.isFinite(score) ? score : undefined;
+  const riskLevel = toRiskLevel(finiteScore, undefined);
+  const riskLabel = toRiskBandEs(finiteScore, undefined);
   return {
     scoreLabel: Number.isFinite(score) ? String(score) : "—",
     riskLevel,

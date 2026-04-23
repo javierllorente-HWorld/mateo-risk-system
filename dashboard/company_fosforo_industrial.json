@@ -1,0 +1,16 @@
+{
+  "applicantName": "Fósforo Industrial SA",
+  "monthlyIncome": 3200000,
+  "requestedAmount": 24000000,
+  "employmentStatus": "Química fina y packaging industrial",
+  "monthsAtJob": 36,
+  "country": "AR",
+  "currency": "ARS",
+  "assessment": {
+    "score": 79,
+    "decision": "reject",
+    "summary": "RECHAZADO: Necesidad de capital elevada con flujo operativo irregular.",
+    "flags": ["high_leverage", "thin_margins"],
+    "reasons": ["Inversiones de capex concentradas en un solo sitio productivo.", "Servicio de deuda supera 45% del flujo mensual estimado."]
+  }
+}

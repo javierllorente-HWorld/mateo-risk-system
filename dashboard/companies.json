@@ -11,6 +11,42 @@
       "label": "Turing Analytics SA",
       "subtitle": "Datos y consultoría",
       "dataPath": "./company_turing_analytics.json"
+    },
+    {
+      "id": "agropampa",
+      "label": "AgroPampa Cooperativa Ltda.",
+      "subtitle": "Agro / cooperativa",
+      "dataPath": "./company_agropampa.json"
+    },
+    {
+      "id": "bienes-cuyo",
+      "label": "Bienes Raíz Cuyo SA",
+      "subtitle": "Inmobiliaria",
+      "dataPath": "./company_bienes_cuyo.json"
+    },
+    {
+      "id": "climatech",
+      "label": "ClimaTech Solutions SRL",
+      "subtitle": "Climatización",
+      "dataPath": "./company_climatech.json"
+    },
+    {
+      "id": "delta-logistica",
+      "label": "Delta Logística SA",
+      "subtitle": "Logística",
+      "dataPath": "./company_delta_logistica.json"
+    },
+    {
+      "id": "electromedica",
+      "label": "Electromédica Rosario SRL",
+      "subtitle": "Salud / distribución",
+      "dataPath": "./company_electromedica.json"
+    },
+    {
+      "id": "fosforo-industrial",
+      "label": "Fósforo Industrial SA",
+      "subtitle": "Química industrial",
+      "dataPath": "./company_fosforo_industrial.json"
     }
   ]
 }

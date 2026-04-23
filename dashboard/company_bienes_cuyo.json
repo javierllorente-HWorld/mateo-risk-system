@@ -1,0 +1,16 @@
+{
+  "applicantName": "Bienes Raíz Cuyo SA",
+  "monthlyIncome": 4200000,
+  "requestedAmount": 22000000,
+  "employmentStatus": "Desarrollo inmobiliario y alquileres",
+  "monthsAtJob": 48,
+  "country": "AR",
+  "currency": "ARS",
+  "assessment": {
+    "score": 61,
+    "decision": "review",
+    "summary": "REVISIÓN (score=61): Apalancamiento en alza y dependencia de un proyecto en curso.",
+    "flags": ["high_leverage", "sector_risk"],
+    "reasons": ["Ratio deuda/EBITDA por encima del objetivo interno.", "Exposición a ciclo inmobiliario regional."]
+  }
+}

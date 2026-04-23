@@ -1,0 +1,17 @@
+{
+  "applicantName": "Gabriel Gómez",
+  "applicantAgeYears": 22,
+  "monthlyIncome": 2100,
+  "requestedAmount": 3800000,
+  "employmentStatus": "Primer empleo formal",
+  "monthsAtJob": 4,
+  "country": "AR",
+  "currency": "ARS",
+  "assessment": {
+    "score": 91,
+    "decision": "reject",
+    "summary": "RECHAZADO: Score elevado por múltiples señales de tensión de pago.",
+    "flags": ["requested_amount_high", "short_job_tenure", "low_income"],
+    "reasons": ["Ingresos insuficientes para el monto.", "Muy poca antigüedad en el empleo actual.", "Monto solicitado muy alto."]
+  }
+}

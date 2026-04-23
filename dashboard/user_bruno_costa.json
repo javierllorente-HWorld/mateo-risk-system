@@ -1,0 +1,17 @@
+{
+  "applicantName": "Bruno Costa",
+  "applicantAgeYears": 44,
+  "monthlyIncome": 4100,
+  "requestedAmount": 2100000,
+  "employmentStatus": "Empleado sector privado",
+  "monthsAtJob": 14,
+  "country": "AR",
+  "currency": "ARS",
+  "assessment": {
+    "score": 55,
+    "decision": "review",
+    "summary": "REVISIÓN (score=55): Relación monto/ingreso en zona de atención y variabilidad reciente.",
+    "flags": ["requested_amount_high", "high_dti"],
+    "reasons": ["Monto solicitado elevado frente a ingresos declarados.", "Cuotas previas concentradas en corto plazo."]
+  }
+}

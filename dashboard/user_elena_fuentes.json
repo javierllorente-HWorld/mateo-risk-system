@@ -1,0 +1,17 @@
+{
+  "applicantName": "Elena Fuentes",
+  "applicantAgeYears": 33,
+  "monthlyIncome": 4900,
+  "requestedAmount": 1800000,
+  "employmentStatus": "Empleada",
+  "monthsAtJob": 20,
+  "country": "AR",
+  "currency": "ARS",
+  "assessment": {
+    "score": 64,
+    "decision": "review",
+    "summary": "REVISIÓN (score=64): Ingresos aceptables pero concentración de consultas recientes en centrales de riesgo.",
+    "flags": ["has_defaults"],
+    "reasons": ["Reflejos menores de mora en el último año.", "Relación deuda/ingreso en el límite superior aceptable."]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "applicantName": "Daniel Espinoza",
+  "applicantAgeYears": 39,
+  "monthlyIncome": 7200,
+  "requestedAmount": 480000,
+  "employmentStatus": "Jefe de turno",
+  "monthsAtJob": 96,
+  "country": "AR",
+  "currency": "ARS",
+  "assessment": {
+    "score": 30,
+    "decision": "approve",
+    "summary": "APROBADO: Larga trayectoria laboral y carga de endeudamiento moderada.",
+    "flags": [],
+    "reasons": ["Ingresos verificables y estables.", "Monto acorde al historial crediticio."]
+  }
+}

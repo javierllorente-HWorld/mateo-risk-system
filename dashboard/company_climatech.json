@@ -1,0 +1,16 @@
+{
+  "applicantName": "ClimaTech Solutions SRL",
+  "monthlyIncome": 980000,
+  "requestedAmount": 28000000,
+  "employmentStatus": "Equipamiento HVAC y eficiencia energética",
+  "monthsAtJob": 18,
+  "country": "AR",
+  "currency": "ARS",
+  "assessment": {
+    "score": 86,
+    "decision": "reject",
+    "summary": "RECHAZADO: Márgenes comprimidos y fuerte apalancamiento frente a facturación.",
+    "flags": ["thin_margins", "high_leverage", "customer_concentration"],
+    "reasons": ["EBITDA marginal en últimos trimestres.", "Dos clientes representan más del 70% de facturación.", "Líneas bancarias casi al límite."]
+  }
+}

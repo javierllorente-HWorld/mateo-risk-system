@@ -1,0 +1,16 @@
+{
+  "applicantName": "Electromédica Rosario SRL",
+  "monthlyIncome": 5600000,
+  "requestedAmount": 6500000,
+  "employmentStatus": "Distribución de insumos hospitalarios",
+  "monthsAtJob": 90,
+  "country": "AR",
+  "currency": "ARS",
+  "assessment": {
+    "score": 33,
+    "decision": "approve",
+    "summary": "APROBADO: Cartera diversificada y buen control de stock y cobranzas.",
+    "flags": [],
+    "reasons": ["Rotación de cuentas por cobrar dentro de política.", "Sin concentración crítica de deudores."]
+  }
+}

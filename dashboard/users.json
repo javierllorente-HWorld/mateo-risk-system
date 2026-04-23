@@ -11,7 +11,42 @@
       "label": "Alan Turing",
       "subtitle": "Perfil con riesgo alto",
       "dataPath": "./user_alan.json"
+    },
+    {
+      "id": "ana-martinez",
+      "label": "Ana Martínez",
+      "subtitle": "Ejemplo — riesgo bajo",
+      "dataPath": "./user_ana_martinez.json"
+    },
+    {
+      "id": "bruno-costa",
+      "label": "Bruno Costa",
+      "subtitle": "Ejemplo — riesgo medio",
+      "dataPath": "./user_bruno_costa.json"
+    },
+    {
+      "id": "carla-duarte",
+      "label": "Carla Duarte",
+      "subtitle": "Ejemplo — riesgo alto",
+      "dataPath": "./user_carla_duarte.json"
+    },
+    {
+      "id": "daniel-espinoza",
+      "label": "Daniel Espinoza",
+      "subtitle": "Ejemplo — riesgo bajo",
+      "dataPath": "./user_daniel_espinoza.json"
+    },
+    {
+      "id": "elena-fuentes",
+      "label": "Elena Fuentes",
+      "subtitle": "Ejemplo — riesgo medio",
+      "dataPath": "./user_elena_fuentes.json"
+    },
+    {
+      "id": "gabriel-gomez",
+      "label": "Gabriel Gómez",
+      "subtitle": "Ejemplo — riesgo alto",
+      "dataPath": "./user_gabriel_gomez.json"
     }
   ]
 }
-
