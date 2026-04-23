@@ -1,16 +1,10 @@
 {
   "users": [
     {
-      "id": "ada",
-      "label": "Ada Lovelace",
-      "subtitle": "Perfil con señales moderadas",
-      "dataPath": "./data.json"
-    },
-    {
       "id": "grace",
       "label": "Grace Hopper",
       "subtitle": "Perfil con riesgo bajo",
-      "dataPath": "./user_grace.json"
+      "dataPath": "./data.json"
     },
     {
       "id": "alan",

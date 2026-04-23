@@ -36,26 +36,63 @@ body {
 
 body {
   margin: 0;
-  background:
-    radial-gradient(1200px 500px at 10% 0%, rgba(211, 161, 90, 0.22), transparent 60%),
-    radial-gradient(900px 420px at 90% 10%, rgba(153, 101, 46, 0.16), transparent 55%),
-    linear-gradient(180deg, var(--bg), var(--cream-soft));
+  background: radial-gradient(1200px 800px at 10% -10%, rgba(211, 161, 90, 0.16), transparent 55%),
+    radial-gradient(800px 600px at 85% 0%, rgba(139, 90, 43, 0.18), transparent 55%),
+    linear-gradient(180deg, rgba(90, 52, 18, 0.98), rgba(90, 52, 18, 0.92) 240px, var(--cream-soft) 240px);
   color: var(--text);
 }
 
 .container {
   max-width: 860px;
-  margin: 44px auto;
+  margin: 28px auto;
   padding: 0 18px;
   font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
   color: var(--text);
 }
 
-.header h1 {
-  margin: 0 0 6px 0;
-  font-size: 24px;
+/* Top hero bar */
+.heroBar {
+  padding: 28px 0 14px 0;
+  color: rgba(243, 235, 221, 0.96);
+}
+
+.heroInner {
+  display: grid;
+  grid-template-columns: 1fr 240px;
+  gap: 18px;
+  align-items: center;
+}
+
+.heroKicker {
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(231, 221, 204, 0.75);
+}
+
+.heroTitle {
+  margin: 8px 0 6px 0;
+  font-size: 28px;
+  line-height: 1.05;
   letter-spacing: 0.2px;
-  color: var(--brown-dark);
+  color: rgba(243, 235, 221, 0.98);
+}
+
+.heroSubtitle {
+  margin: 0;
+  max-width: 60ch;
+  color: rgba(231, 221, 204, 0.84);
+}
+
+.heroDeco {
+  height: 104px;
+  border-radius: 18px;
+  border: 1px solid rgba(211, 161, 90, 0.28);
+  background:
+    radial-gradient(120px 120px at 20% 30%, rgba(211, 161, 90, 0.55), transparent 60%),
+    radial-gradient(140px 140px at 70% 40%, rgba(153, 101, 46, 0.45), transparent 60%),
+    linear-gradient(180deg, rgba(231, 221, 204, 0.08), rgba(231, 221, 204, 0.02));
+  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
 }
 
 .muted {
@@ -403,6 +440,12 @@ code {
 }
 
 @media (max-width: 720px) {
+  .heroInner {
+    grid-template-columns: 1fr;
+  }
+  .heroDeco {
+    height: 72px;
+  }
   .heroMeta {
     grid-template-columns: 1fr;
   }

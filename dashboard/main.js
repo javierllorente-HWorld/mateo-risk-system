@@ -240,7 +240,7 @@ async function load() {
   const menu = document.getElementById("applicantMenu");
 
   const users = (await loadUsersIndex()) ?? [
-    { id: "default", label: "Ada Lovelace", subtitle: "Ejemplo", dataPath: "./data.json" }
+    { id: "default", label: "Grace Hopper", subtitle: "Ejemplo", dataPath: "./data.json" }
   ];
 
   const selectedId = getSelectedUserId() ?? users[0]?.id ?? "default";
