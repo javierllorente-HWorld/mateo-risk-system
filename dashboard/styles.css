@@ -36,9 +36,9 @@ body {
 
 body {
   margin: 0;
-  background: radial-gradient(1200px 800px at 10% -10%, rgba(211, 161, 90, 0.16), transparent 55%),
-    radial-gradient(800px 600px at 85% 0%, rgba(139, 90, 43, 0.18), transparent 55%),
-    linear-gradient(180deg, rgba(90, 52, 18, 0.98), rgba(90, 52, 18, 0.92) 240px, var(--cream-soft) 240px);
+  background: radial-gradient(900px 700px at 12% -15%, rgba(211, 161, 90, 0.18), transparent 58%),
+    radial-gradient(900px 700px at 88% -10%, rgba(153, 101, 46, 0.18), transparent 60%),
+    linear-gradient(180deg, rgba(60, 34, 14, 0.98), rgba(58, 32, 13, 0.96) 260px, var(--cream-soft) 260px);
   color: var(--text);
 }
 
@@ -54,6 +54,38 @@ body {
 .heroBar {
   padding: 28px 0 14px 0;
   color: rgba(243, 235, 221, 0.96);
+  position: relative;
+  overflow: hidden;
+}
+
+.heroBar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(520px 320px at 18% 20%, rgba(211, 161, 90, 0.22), transparent 65%),
+    radial-gradient(520px 360px at 80% 15%, rgba(153, 101, 46, 0.22), transparent 70%),
+    radial-gradient(900px 520px at 55% -20%, rgba(231, 221, 204, 0.06), transparent 60%),
+    linear-gradient(180deg, rgba(58, 32, 13, 0.75), rgba(58, 32, 13, 0.25));
+  pointer-events: none;
+}
+
+/* Subtle curved shape in bottom-right */
+.heroBar::after {
+  content: "";
+  position: absolute;
+  right: -140px;
+  bottom: -160px;
+  width: 420px;
+  height: 340px;
+  border-radius: 999px;
+  background:
+    radial-gradient(240px 220px at 40% 40%, rgba(211, 161, 90, 0.18), transparent 65%),
+    radial-gradient(260px 220px at 70% 55%, rgba(139, 90, 43, 0.22), transparent 68%),
+    linear-gradient(180deg, rgba(231, 221, 204, 0.06), rgba(231, 221, 204, 0.02));
+  border: 1px solid rgba(211, 161, 90, 0.10);
+  filter: blur(0.2px);
+  pointer-events: none;
 }
 
 .heroInner {
@@ -61,6 +93,8 @@ body {
   grid-template-columns: 1fr 240px;
   gap: 18px;
   align-items: center;
+  position: relative;
+  z-index: 1;
 }
 
 .heroKicker {
@@ -70,8 +104,34 @@ body {
   color: rgba(231, 221, 204, 0.75);
 }
 
-.heroTitle {
+.heroTitleRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin: 8px 0 6px 0;
+}
+
+.heroIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 14px;
+  display: grid;
+  place-items: center;
+  color: rgba(243, 235, 221, 0.92);
+  background:
+    radial-gradient(22px 22px at 35% 35%, rgba(211, 161, 90, 0.35), transparent 65%),
+    linear-gradient(180deg, rgba(231, 221, 204, 0.10), rgba(231, 221, 204, 0.04));
+  border: 1px solid rgba(211, 161, 90, 0.22);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, 0.20);
+}
+
+.heroIcon svg {
+  width: 22px;
+  height: 22px;
+}
+
+.heroTitle {
+  margin: 0;
   font-size: 28px;
   line-height: 1.05;
   letter-spacing: 0.2px;
@@ -84,15 +144,44 @@ body {
   color: rgba(231, 221, 204, 0.84);
 }
 
-.heroDeco {
-  height: 104px;
-  border-radius: 18px;
-  border: 1px solid rgba(211, 161, 90, 0.28);
+/* Decorative element inspired by “Mateo” (no images, pure CSS) */
+.heroMateo {
+  height: 132px;
+  position: relative;
+  border-radius: 22px;
+}
+
+.heroMateo::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 22px;
   background:
-    radial-gradient(120px 120px at 20% 30%, rgba(211, 161, 90, 0.55), transparent 60%),
-    radial-gradient(140px 140px at 70% 40%, rgba(153, 101, 46, 0.45), transparent 60%),
-    linear-gradient(180deg, rgba(231, 221, 204, 0.08), rgba(231, 221, 204, 0.02));
-  box-shadow: 0 18px 50px rgba(0, 0, 0, 0.22);
+    radial-gradient(42px 42px at 70% 28%, rgba(243, 235, 221, 0.22), transparent 60%),
+    radial-gradient(70px 70px at 68% 55%, rgba(211, 161, 90, 0.30), transparent 62%),
+    radial-gradient(120px 120px at 60% 70%, rgba(153, 101, 46, 0.22), transparent 65%),
+    linear-gradient(180deg, rgba(231, 221, 204, 0.06), rgba(231, 221, 204, 0.02));
+  border: 1px solid rgba(211, 161, 90, 0.18);
+  box-shadow: 0 22px 70px rgba(0, 0, 0, 0.26);
+}
+
+.heroMateo::after {
+  /* “Character” silhouette + accents */
+  content: "";
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  width: 150px;
+  height: 112px;
+  border-radius: 26px 26px 22px 22px;
+  background:
+    radial-gradient(14px 14px at 58% 32%, rgba(42, 26, 16, 0.55), transparent 60%),
+    radial-gradient(14px 14px at 72% 32%, rgba(42, 26, 16, 0.55), transparent 60%),
+    radial-gradient(32px 26px at 65% 54%, rgba(211, 161, 90, 0.22), transparent 70%),
+    linear-gradient(180deg, rgba(231, 221, 204, 0.18), rgba(231, 221, 204, 0.06));
+  border: 1px solid rgba(231, 221, 204, 0.12);
+  transform: rotate(-2deg);
+  opacity: 0.95;
 }
 
 .muted {
@@ -443,8 +532,8 @@ code {
   .heroInner {
     grid-template-columns: 1fr;
   }
-  .heroDeco {
-    height: 72px;
+  .heroMateo {
+    height: 92px;
   }
   .heroMeta {
     grid-template-columns: 1fr;
