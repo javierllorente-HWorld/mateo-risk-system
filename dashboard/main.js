@@ -147,6 +147,30 @@ function setSelectedUserId(id) {
   } catch {}
   const url = new URL(window.location.href);
   if (id) url.searchParams.set("user", id);
+  else url.searchParams.delete("user");
+  url.searchParams.delete("company");
+  window.history.replaceState({}, "", url.toString());
+}
+
+function getSelectedCompanyId() {
+  const url = new URL(window.location.href);
+  const fromUrl = url.searchParams.get("company");
+  if (fromUrl) return fromUrl;
+  try {
+    return window.localStorage.getItem("selected_company") || null;
+  } catch {
+    return null;
+  }
+}
+
+function setSelectedCompanyId(id) {
+  try {
+    if (id) window.localStorage.setItem("selected_company", id);
+  } catch {}
+  const url = new URL(window.location.href);
+  if (id) url.searchParams.set("company", id);
+  else url.searchParams.delete("company");
+  url.searchParams.delete("user");
   window.history.replaceState({}, "", url.toString());
 }
 
@@ -158,6 +182,18 @@ async function loadUsersIndex() {
     const data = await res.json();
     if (!data || !Array.isArray(data.users)) return null;
     return data.users;
+  } catch {
+    return null;
+  }
+}
+
+async function loadCompaniesIndex() {
+  try {
+    const res = await fetch("./companies.json", { cache: "no-store" });
+    if (!res.ok) return null;
+    const data = await res.json();
+    if (!data || !Array.isArray(data.companies)) return null;
+    return data.companies;
   } catch {
     return null;
   }
@@ -179,19 +215,19 @@ function isMenuOpen(menu) {
   return !!menu && menu.classList.contains("open");
 }
 
-function renderUserMenu(users, onSelect) {
+function renderEntityMenu(entities, onSelect) {
   const menu = document.getElementById("applicantMenuItems");
   if (!menu) return;
   menu.innerHTML = "";
 
-  for (const u of users) {
+  for (const entity of entities) {
     const btn = document.createElement("button");
     btn.type = "button";
     btn.className = "menuItem";
     btn.setAttribute("role", "option");
-    btn.textContent = u?.label ?? u?.id ?? "Usuario";
+    btn.textContent = entity?.label ?? entity?.id ?? "—";
 
-    btn.addEventListener("click", () => onSelect(u));
+    btn.addEventListener("click", () => onSelect(entity));
     menu.appendChild(btn);
   }
 }
@@ -267,22 +303,26 @@ function applyModeLabels(mode) {
 
 function buildViewRow(raw, analysisMode) {
   const base = raw && typeof raw === "object" ? raw : {};
-  if (analysisMode !== "pyme" || !base.pyme || typeof base.pyme !== "object") {
-    return base;
+  if (analysisMode === "persona") {
+    const { pyme: _omit, ...rest } = base;
+    return rest;
   }
-  const p = base.pyme;
-  return {
-    ...base,
-    applicantName: p.applicantName ?? base.applicantName,
-    monthlyIncome: p.monthlyIncome ?? base.monthlyIncome,
-    requestedAmount: p.requestedAmount ?? base.requestedAmount,
-    employmentStatus: p.employmentStatus ?? base.employmentStatus,
-    monthsAtJob: p.monthsAtJob ?? base.monthsAtJob,
-    applicantAgeYears: Object.prototype.hasOwnProperty.call(p, "applicantAgeYears") ? p.applicantAgeYears : undefined,
-    country: p.country ?? base.country,
-    currency: p.currency ?? base.currency,
-    assessment: p.assessment ?? base.assessment
-  };
+  if (base.pyme && typeof base.pyme === "object") {
+    const p = base.pyme;
+    return {
+      ...base,
+      applicantName: p.applicantName ?? base.applicantName,
+      monthlyIncome: p.monthlyIncome ?? base.monthlyIncome,
+      requestedAmount: p.requestedAmount ?? base.requestedAmount,
+      employmentStatus: p.employmentStatus ?? base.employmentStatus,
+      monthsAtJob: p.monthsAtJob ?? base.monthsAtJob,
+      applicantAgeYears: Object.prototype.hasOwnProperty.call(p, "applicantAgeYears") ? p.applicantAgeYears : undefined,
+      country: p.country ?? base.country,
+      currency: p.currency ?? base.currency,
+      assessment: p.assessment ?? base.assessment
+    };
+  }
+  return { ...base };
 }
 
 function applyDashboardData(raw, analysisMode) {
@@ -334,6 +374,24 @@ function applyDashboardData(raw, analysisMode) {
   }
 }
 
+function syncApplicantChooserChrome(mode) {
+  const search = document.getElementById("applicantSearch");
+  const menu = document.getElementById("applicantMenu");
+  if (mode === "pyme") {
+    if (search) {
+      search.placeholder = "Buscar empresa…";
+      search.setAttribute("aria-label", "Buscar empresa");
+    }
+    if (menu) menu.setAttribute("aria-label", "Elegir empresa");
+  } else {
+    if (search) {
+      search.placeholder = "Buscar solicitante…";
+      search.setAttribute("aria-label", "Buscar solicitante");
+    }
+    if (menu) menu.setAttribute("aria-label", "Elegir solicitante");
+  }
+}
+
 async function load() {
   syncAnalysisRadiosFromStorage();
 
@@ -341,49 +399,90 @@ async function load() {
   const menu = document.getElementById("applicantMenu");
   const search = document.getElementById("applicantSearch");
 
-  let lastLoadedRaw = null;
+  const users = (await loadUsersIndex()) ?? [
+    { id: "default", label: "Grace Hopper", subtitle: "Ejemplo", dataPath: "./data.json" }
+  ];
 
-  const onAnalysisModeChange = () => {
+  const companies = (await loadCompaniesIndex()) ?? [
+    { id: "hopper-labs", label: "Hopper Labs SRL", subtitle: "Ejemplo", dataPath: "./company_hopper_labs.json" }
+  ];
+
+  let selectedPersona = users.find((u) => u?.id === getSelectedUserId()) ?? users[0];
+  let selectedPyme = companies.find((c) => c?.id === getSelectedCompanyId()) ?? companies[0];
+
+  const url = new URL(window.location.href);
+  if (getCurrentAnalysisMode() === "persona") url.searchParams.delete("company");
+  else url.searchParams.delete("user");
+  window.history.replaceState({}, "", url.toString());
+
+  let personaRaw;
+  let pymeRaw;
+
+  async function loadPersonaPayload(u) {
+    selectedPersona = u;
+    const path = u?.dataPath ?? "./data.json";
+    personaRaw = await loadAssessmentJson(path);
+    if (getCurrentAnalysisMode() === "persona") {
+      applyDashboardData(personaRaw, "persona");
+    }
+  }
+
+  async function loadPymePayload(c) {
+    selectedPyme = c;
+    const path = c?.dataPath ?? "./company_hopper_labs.json";
+    pymeRaw = await loadAssessmentJson(path);
+    if (getCurrentAnalysisMode() === "pyme") {
+      applyDashboardData(pymeRaw, "pyme");
+    }
+  }
+
+  const onAnalysisModeChange = async () => {
     const mode = getCurrentAnalysisMode();
     persistAnalysisMode(mode);
-    if (lastLoadedRaw) applyDashboardData(lastLoadedRaw, mode);
+    syncApplicantChooserChrome(mode);
+    closeMenu(menu, trigger);
+    if (search) search.value = "";
+    renderFiltered();
+    if (mode === "persona") {
+      if (personaRaw === undefined) await loadPersonaPayload(selectedPersona);
+      applyDashboardData(personaRaw, "persona");
+    } else {
+      if (pymeRaw === undefined) await loadPymePayload(selectedPyme);
+      applyDashboardData(pymeRaw, "pyme");
+    }
   };
 
   for (const id of ["analysisPyme", "analysisPersona"]) {
     document.getElementById(id)?.addEventListener("change", onAnalysisModeChange);
   }
 
-  const users = (await loadUsersIndex()) ?? [
-    { id: "default", label: "Grace Hopper", subtitle: "Ejemplo", dataPath: "./data.json" }
-  ];
-
-  const selectedId = getSelectedUserId() ?? users[0]?.id ?? "default";
-  let selected = users.find((u) => u?.id === selectedId) ?? users[0];
-
-  const loadAndRender = async (u) => {
-    const path = u?.dataPath ?? "./data.json";
-    const data = await loadAssessmentJson(path);
-    lastLoadedRaw = data;
-    applyDashboardData(data, getCurrentAnalysisMode());
-  };
-
-  const onSelectUser = async (u) => {
-    selected = u;
+  const onSelectPersona = async (u) => {
     setSelectedUserId(u?.id);
     closeMenu(menu, trigger);
     if (search) search.value = "";
-    await loadAndRender(u);
+    await loadPersonaPayload(u);
+  };
+
+  const onSelectPyme = async (c) => {
+    setSelectedCompanyId(c?.id);
+    closeMenu(menu, trigger);
+    if (search) search.value = "";
+    await loadPymePayload(c);
   };
 
   const renderFiltered = () => {
+    const mode = getCurrentAnalysisMode();
+    const list = mode === "pyme" ? companies : users;
+    const onSelect = mode === "pyme" ? onSelectPyme : onSelectPersona;
     const q = (search?.value ?? "").trim().toLowerCase();
     const filtered = q
-      ? users.filter((u) => String(u?.label ?? u?.id ?? "").toLowerCase().includes(q))
-      : users;
-    renderUserMenu(filtered, onSelectUser);
+      ? list.filter((item) => String(item?.label ?? item?.id ?? "").toLowerCase().includes(q))
+      : list;
+    renderEntityMenu(filtered, onSelect);
   };
 
-  renderFiltered();
+  syncApplicantChooserChrome(getCurrentAnalysisMode());
+
   if (search) {
     search.addEventListener("input", renderFiltered);
   }
@@ -412,8 +511,12 @@ async function load() {
     });
   }
 
-  // Initial render
-  await loadAndRender(selected);
+  if (getCurrentAnalysisMode() === "persona") {
+    await loadPersonaPayload(selectedPersona);
+  } else {
+    await loadPymePayload(selectedPyme);
+  }
+  renderFiltered();
 }
 
 load().catch((e) => {

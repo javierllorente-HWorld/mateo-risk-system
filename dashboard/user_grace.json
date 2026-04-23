@@ -13,25 +13,5 @@
     "summary": "Buen perfil general, ingresos consistentes y monto solicitado bajo.",
     "flags": [],
     "reasons": ["Ingresos consistentes.", "Monto solicitado bajo."]
-  },
-  "pyme": {
-    "applicantName": "Hopper Labs SRL",
-    "monthlyIncome": 3100000,
-    "requestedAmount": 4200000,
-    "employmentStatus": "Servicios de TI y capacitación",
-    "monthsAtJob": 96,
-    "country": "AR",
-    "currency": "ARS",
-    "assessment": {
-      "score": 28,
-      "decision": "approve",
-      "summary": "APROBADO: Facturación estable, diversificación de clientes y endeudamiento acotado.",
-      "flags": [],
-      "reasons": [
-        "Cartera de clientes diversificada (ninguno supera el 18% de ventas).",
-        "Ratio deuda/facturación anual dentro de política interna."
-      ]
-    }
   }
 }
-
