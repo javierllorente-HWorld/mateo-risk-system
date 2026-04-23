@@ -73,7 +73,8 @@ body {
   z-index: 1;
   display: grid;
   grid-template-columns: 1fr auto;
-  gap: 18px;
+  column-gap: 34px;
+  row-gap: 18px;
   align-items: start;
 }
 
