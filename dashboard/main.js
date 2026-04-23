@@ -3,11 +3,6 @@ function setText(id, text) {
   if (el) el.textContent = text ?? "—";
 }
 
-function setExpanded(el, expanded) {
-  if (!el) return;
-  el.setAttribute("aria-expanded", expanded ? "true" : "false");
-}
-
 function setList(id, items, mapItem) {
   const ul = document.getElementById(id);
   if (!ul) return;
@@ -199,36 +194,31 @@ async function loadCompaniesIndex() {
   }
 }
 
-function openMenu(menu, trigger) {
-  if (!menu || !trigger) return;
-  menu.classList.add("open");
-  setExpanded(trigger, true);
-}
+function renderMasterList(entities, selectedId, onSelect) {
+  const container = document.getElementById("masterList");
+  if (!container) return;
+  container.innerHTML = "";
 
-function closeMenu(menu, trigger) {
-  if (!menu || !trigger) return;
-  menu.classList.remove("open");
-  setExpanded(trigger, false);
-}
-
-function isMenuOpen(menu) {
-  return !!menu && menu.classList.contains("open");
-}
-
-function renderEntityMenu(entities, onSelect) {
-  const menu = document.getElementById("applicantMenuItems");
-  if (!menu) return;
-  menu.innerHTML = "";
+  if (!entities || entities.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "masterEmpty muted";
+    empty.textContent = "No hay resultados.";
+    container.appendChild(empty);
+    return;
+  }
 
   for (const entity of entities) {
+    const id = entity?.id ?? "";
     const btn = document.createElement("button");
     btn.type = "button";
-    btn.className = "menuItem";
+    btn.className = "masterRow";
     btn.setAttribute("role", "option");
-    btn.textContent = entity?.label ?? entity?.id ?? "—";
-
+    const isActive = id === selectedId;
+    btn.setAttribute("aria-selected", isActive ? "true" : "false");
+    if (isActive) btn.classList.add("is-active");
+    btn.textContent = entity?.label ?? id ?? "—";
     btn.addEventListener("click", () => onSelect(entity));
-    menu.appendChild(btn);
+    container.appendChild(btn);
   }
 }
 
@@ -374,30 +364,31 @@ function applyDashboardData(raw, analysisMode) {
   }
 }
 
-function syncApplicantChooserChrome(mode) {
-  const search = document.getElementById("applicantSearch");
-  const menu = document.getElementById("applicantMenu");
+function syncMasterPanelChrome(mode) {
+  const title = document.getElementById("masterListTitle");
+  const search = document.getElementById("masterSearch");
+  const list = document.getElementById("masterList");
   if (mode === "pyme") {
+    if (title) title.textContent = "Empresas";
     if (search) {
       search.placeholder = "Buscar empresa…";
       search.setAttribute("aria-label", "Buscar empresa");
     }
-    if (menu) menu.setAttribute("aria-label", "Elegir empresa");
+    if (list) list.setAttribute("aria-label", "Lista de empresas");
   } else {
+    if (title) title.textContent = "Solicitantes";
     if (search) {
       search.placeholder = "Buscar solicitante…";
       search.setAttribute("aria-label", "Buscar solicitante");
     }
-    if (menu) menu.setAttribute("aria-label", "Elegir solicitante");
+    if (list) list.setAttribute("aria-label", "Lista de solicitantes");
   }
 }
 
 async function load() {
   syncAnalysisRadiosFromStorage();
 
-  const trigger = document.getElementById("applicantTrigger");
-  const menu = document.getElementById("applicantMenu");
-  const search = document.getElementById("applicantSearch");
+  const masterSearch = document.getElementById("masterSearch");
 
   const users = (await loadUsersIndex()) ?? [
     { id: "default", label: "Grace Hopper", subtitle: "Ejemplo", dataPath: "./data.json" }
@@ -418,6 +409,18 @@ async function load() {
   let personaRaw;
   let pymeRaw;
 
+  function renderFiltered() {
+    const mode = getCurrentAnalysisMode();
+    const list = mode === "pyme" ? companies : users;
+    const selectedId = mode === "pyme" ? selectedPyme?.id : selectedPersona?.id;
+    const onSelect = mode === "pyme" ? onSelectPyme : onSelectPersona;
+    const q = (masterSearch?.value ?? "").trim().toLowerCase();
+    const filtered = q
+      ? list.filter((item) => String(item?.label ?? item?.id ?? "").toLowerCase().includes(q))
+      : list;
+    renderMasterList(filtered, selectedId, onSelect);
+  }
+
   async function loadPersonaPayload(u) {
     selectedPersona = u;
     const path = u?.dataPath ?? "./data.json";
@@ -425,6 +428,7 @@ async function load() {
     if (getCurrentAnalysisMode() === "persona") {
       applyDashboardData(personaRaw, "persona");
     }
+    renderFiltered();
   }
 
   async function loadPymePayload(c) {
@@ -434,81 +438,42 @@ async function load() {
     if (getCurrentAnalysisMode() === "pyme") {
       applyDashboardData(pymeRaw, "pyme");
     }
+    renderFiltered();
+  }
+
+  async function onSelectPersona(u) {
+    setSelectedUserId(u?.id);
+    await loadPersonaPayload(u);
+  }
+
+  async function onSelectPyme(c) {
+    setSelectedCompanyId(c?.id);
+    await loadPymePayload(c);
   }
 
   const onAnalysisModeChange = async () => {
     const mode = getCurrentAnalysisMode();
     persistAnalysisMode(mode);
-    syncApplicantChooserChrome(mode);
-    closeMenu(menu, trigger);
-    if (search) search.value = "";
-    renderFiltered();
+    syncMasterPanelChrome(mode);
+    if (masterSearch) masterSearch.value = "";
     if (mode === "persona") {
       if (personaRaw === undefined) await loadPersonaPayload(selectedPersona);
-      applyDashboardData(personaRaw, "persona");
+      else applyDashboardData(personaRaw, "persona");
     } else {
       if (pymeRaw === undefined) await loadPymePayload(selectedPyme);
-      applyDashboardData(pymeRaw, "pyme");
+      else applyDashboardData(pymeRaw, "pyme");
     }
+    renderFiltered();
   };
 
   for (const id of ["analysisPyme", "analysisPersona"]) {
     document.getElementById(id)?.addEventListener("change", onAnalysisModeChange);
   }
 
-  const onSelectPersona = async (u) => {
-    setSelectedUserId(u?.id);
-    closeMenu(menu, trigger);
-    if (search) search.value = "";
-    await loadPersonaPayload(u);
-  };
+  syncMasterPanelChrome(getCurrentAnalysisMode());
 
-  const onSelectPyme = async (c) => {
-    setSelectedCompanyId(c?.id);
-    closeMenu(menu, trigger);
-    if (search) search.value = "";
-    await loadPymePayload(c);
-  };
-
-  const renderFiltered = () => {
-    const mode = getCurrentAnalysisMode();
-    const list = mode === "pyme" ? companies : users;
-    const onSelect = mode === "pyme" ? onSelectPyme : onSelectPersona;
-    const q = (search?.value ?? "").trim().toLowerCase();
-    const filtered = q
-      ? list.filter((item) => String(item?.label ?? item?.id ?? "").toLowerCase().includes(q))
-      : list;
-    renderEntityMenu(filtered, onSelect);
-  };
-
-  syncApplicantChooserChrome(getCurrentAnalysisMode());
-
-  if (search) {
-    search.addEventListener("input", renderFiltered);
-  }
-
-  if (trigger && menu) {
-    setExpanded(trigger, false);
-    trigger.addEventListener("click", () => {
-      if (isMenuOpen(menu)) closeMenu(menu, trigger);
-      else {
-        openMenu(menu, trigger);
-        if (search) {
-          search.focus();
-          search.select();
-        }
-      }
-    });
-
-    document.addEventListener("click", (e) => {
-      const dd = document.getElementById("applicantDropdown");
-      if (!dd) return;
-      if (!dd.contains(e.target)) closeMenu(menu, trigger);
-    });
-
-    document.addEventListener("keydown", (e) => {
-      if (e.key === "Escape") closeMenu(menu, trigger);
-    });
+  if (masterSearch) {
+    masterSearch.addEventListener("input", renderFiltered);
   }
 
   if (getCurrentAnalysisMode() === "persona") {
@@ -516,7 +481,6 @@ async function load() {
   } else {
     await loadPymePayload(selectedPyme);
   }
-  renderFiltered();
 }
 
 load().catch((e) => {

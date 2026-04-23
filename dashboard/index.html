@@ -56,93 +56,91 @@
       </div>
     </section>
 
-    <main class="container">
-      <section class="card" id="app">
-        <div class="hero">
-          <div class="heroTop">
-            <div>
-              <div class="label">Decisión</div>
-              <div class="decisionText" id="decisionText">—</div>
-            </div>
-            <div class="pill decisionPill" id="decisionPill">—</div>
-          </div>
-          <div class="heroMeta">
-            <div class="metaItem">
-              <div class="label">Puntaje</div>
-              <div class="metaValue">
-                <span class="scoreValue" id="score">—</span>
-                <span class="scoreContext" id="scoreContext">—</span>
+    <main class="container workspaceLayout">
+      <div class="workspace">
+        <aside class="masterPanel" id="masterPanel" aria-labelledby="masterListTitle">
+          <div class="masterPanelTitle" id="masterListTitle">Solicitantes</div>
+          <input
+            type="search"
+            id="masterSearch"
+            class="masterSearchInput"
+            placeholder="Buscar solicitante…"
+            autocomplete="off"
+            aria-label="Buscar solicitante"
+          />
+          <div class="masterList" id="masterList" role="listbox" aria-label="Lista de solicitantes"></div>
+        </aside>
+
+        <div class="detailPane">
+          <section class="card" id="app">
+            <div class="hero">
+              <div class="heroTop">
+                <div>
+                  <div class="label">Decisión</div>
+                  <div class="decisionText" id="decisionText">—</div>
+                </div>
+                <div class="pill decisionPill" id="decisionPill">—</div>
               </div>
-            </div>
-            <div class="metaItem">
-              <div class="label" id="applicantMetaLabel">Solicitante</div>
-              <div class="dropdown" id="applicantDropdown">
-                <button class="dropdownTrigger" id="applicantTrigger" type="button" aria-haspopup="listbox" aria-expanded="false">
-                  <span class="metaValue" id="applicantName">—</span>
-                  <span class="chevron" aria-hidden="true">▾</span>
-                </button>
-                <div class="dropdownMenu" id="applicantMenu" role="listbox" aria-label="Elegir solicitante">
-                  <div class="menuSearch">
-                    <input
-                      class="menuSearchInput"
-                      id="applicantSearch"
-                      type="search"
-                      placeholder="Buscar solicitante…"
-                      autocomplete="off"
-                      aria-label="Buscar solicitante"
-                    />
+              <div class="heroMeta">
+                <div class="metaItem">
+                  <div class="label">Puntaje</div>
+                  <div class="metaValue">
+                    <span class="scoreValue" id="score">—</span>
+                    <span class="scoreContext" id="scoreContext">—</span>
                   </div>
-                  <div id="applicantMenuItems"></div>
+                </div>
+                <div class="metaItem">
+                  <div class="label" id="applicantMetaLabel">Solicitante</div>
+                  <div class="metaValue entityNameValue" id="applicantName">—</div>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        <section class="subcard" id="applicantDetails">
-          <div class="subcardTitle" id="applicantDetailsTitle">Datos del solicitante</div>
-          <div class="detailsGrid">
-            <div class="detail" data-field>
-              <div class="label" id="labelMonthlyIncome">Ingreso mensual</div>
-              <div class="value" id="monthlyIncome">—</div>
+            <section class="subcard" id="applicantDetails">
+              <div class="subcardTitle" id="applicantDetailsTitle">Datos del solicitante</div>
+              <div class="detailsGrid">
+                <div class="detail" data-field>
+                  <div class="label" id="labelMonthlyIncome">Ingreso mensual</div>
+                  <div class="value" id="monthlyIncome">—</div>
+                </div>
+                <div class="detail" data-field>
+                  <div class="label" id="labelRequestedAmount">Monto solicitado</div>
+                  <div class="value" id="requestedAmount">—</div>
+                </div>
+                <div class="detail" data-field>
+                  <div class="label" id="labelEmployment">Empleo</div>
+                  <div class="value" id="employmentStatus">—</div>
+                </div>
+                <div class="detail" data-field>
+                  <div class="label" id="labelJobTenure">Antigüedad laboral</div>
+                  <div class="value" id="monthsAtJob">—</div>
+                </div>
+              </div>
+            </section>
+
+            <div class="field">
+              <div class="label">Resumen</div>
+              <div class="value summary" id="summary">—</div>
             </div>
-            <div class="detail" data-field>
-              <div class="label" id="labelRequestedAmount">Monto solicitado</div>
-              <div class="value" id="requestedAmount">—</div>
+
+            <div class="field">
+              <div class="label">Motivos</div>
+              <ul class="list" id="reasons"></ul>
             </div>
-            <div class="detail" data-field>
-              <div class="label" id="labelEmployment">Empleo</div>
-              <div class="value" id="employmentStatus">—</div>
+
+            <div class="field">
+              <div class="label">Señales de riesgo</div>
+              <ul class="list" id="flags"></ul>
             </div>
-            <div class="detail" data-field>
-              <div class="label" id="labelJobTenure">Antigüedad laboral</div>
-              <div class="value" id="monthsAtJob">—</div>
-            </div>
-          </div>
-        </section>
+          </section>
 
-        <div class="field">
-          <div class="label">Resumen</div>
-          <div class="value summary" id="summary">—</div>
+          <footer class="footer muted">
+            Datos desde <code>dashboard/data.json</code> y fuentes locales.
+          </footer>
         </div>
-
-        <div class="field">
-          <div class="label">Motivos</div>
-          <ul class="list" id="reasons"></ul>
-        </div>
-
-        <div class="field">
-          <div class="label">Señales de riesgo</div>
-          <ul class="list" id="flags"></ul>
-        </div>
-      </section>
-
-      <footer class="footer muted">
-        Datos desde <code>dashboard/data.json</code>.
-      </footer>
+      </div>
     </main>
 
     <script type="module" src="./main.js"></script>
   </body>
 </html>
-

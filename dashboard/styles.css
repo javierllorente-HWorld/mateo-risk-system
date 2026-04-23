@@ -74,6 +74,110 @@ main.container {
   margin-bottom: 28px;
 }
 
+main.container.workspaceLayout {
+  max-width: 1100px;
+}
+
+.workspace {
+  display: grid;
+  grid-template-columns: minmax(232px, 26%) minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+}
+
+.masterPanel {
+  padding: 14px;
+  border-radius: var(--radius);
+  border: 1px solid rgba(90, 52, 18, 0.12);
+  background: rgba(243, 235, 221, 0.55);
+  box-shadow: var(--shadow-soft);
+}
+
+.masterPanelTitle {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--brown-dark);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  margin-bottom: 10px;
+}
+
+.masterSearchInput {
+  width: 100%;
+  padding: 9px 10px;
+  border-radius: 12px;
+  border: 1px solid rgba(90, 52, 18, 0.14);
+  background: rgba(231, 221, 204, 0.55);
+  color: rgba(42, 26, 16, 0.94);
+  font: inherit;
+  margin-bottom: 10px;
+}
+
+.masterSearchInput::placeholder {
+  color: rgba(90, 52, 18, 0.55);
+}
+
+.masterSearchInput:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}
+
+.masterList {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  max-height: min(70vh, 520px);
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.masterEmpty {
+  padding: 8px 4px;
+  font-size: 13px;
+}
+
+.masterRow {
+  width: 100%;
+  text-align: left;
+  padding: 10px 10px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  color: rgba(42, 26, 16, 0.94);
+  font: inherit;
+  line-height: 1.25;
+}
+
+.masterRow:hover {
+  background: rgba(216, 199, 174, 0.35);
+  border-color: rgba(90, 52, 18, 0.10);
+}
+
+.masterRow:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}
+
+.masterRow.is-active {
+  background: rgba(243, 235, 221, 0.92);
+  border-color: rgba(90, 52, 18, 0.18);
+  box-shadow: 0 6px 14px rgba(90, 52, 18, 0.08);
+  font-weight: 600;
+}
+
+.detailPane {
+  min-width: 0;
+}
+
+.entityNameValue {
+  display: block;
+  font-weight: 650;
+  font-size: 17px;
+  line-height: 1.25;
+  color: rgba(42, 26, 16, 0.96);
+}
+
 .analysisBar {
   padding: 12px 0;
 }
@@ -551,6 +655,9 @@ code {
   }
   .decisionText {
     font-size: 24px;
+  }
+  .workspace {
+    grid-template-columns: 1fr;
   }
 }
 
