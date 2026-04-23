@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#5A3412" />
+      <stop offset="1" stop-color="#3A200D" />
+    </linearGradient>
+  </defs>
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="url(#bg)" />
+  <rect x="32" y="32" width="448" height="448" rx="96" fill="none" stroke="#D3A15A" stroke-opacity="0.45" stroke-width="10" />
+  <text
+    x="50%"
+    y="56%"
+    text-anchor="middle"
+    dominant-baseline="middle"
+    font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif"
+    font-size="264"
+    font-weight="800"
+    fill="#F3EBDD"
+    letter-spacing="4"
+  >
+    M
+  </text>
+</svg>
+

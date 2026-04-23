@@ -123,11 +123,14 @@ body {
     linear-gradient(180deg, rgba(231, 221, 204, 0.10), rgba(231, 221, 204, 0.04));
   border: 1px solid rgba(211, 161, 90, 0.22);
   box-shadow: 0 18px 44px rgba(0, 0, 0, 0.20);
+  overflow: hidden;
 }
 
-.heroIcon svg {
-  width: 22px;
-  height: 22px;
+.heroLogo {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 10px 18px rgba(0, 0, 0, 0.20));
 }
 
 .heroTitle {
@@ -149,39 +152,19 @@ body {
   height: 132px;
   position: relative;
   border-radius: 22px;
-}
-
-.heroMateo::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border-radius: 22px;
-  background:
-    radial-gradient(42px 42px at 70% 28%, rgba(243, 235, 221, 0.22), transparent 60%),
-    radial-gradient(70px 70px at 68% 55%, rgba(211, 161, 90, 0.30), transparent 62%),
-    radial-gradient(120px 120px at 60% 70%, rgba(153, 101, 46, 0.22), transparent 65%),
-    linear-gradient(180deg, rgba(231, 221, 204, 0.06), rgba(231, 221, 204, 0.02));
   border: 1px solid rgba(211, 161, 90, 0.18);
+  background: linear-gradient(180deg, rgba(231, 221, 204, 0.05), rgba(231, 221, 204, 0.02));
   box-shadow: 0 22px 70px rgba(0, 0, 0, 0.26);
+  display: grid;
+  place-items: center;
+  overflow: hidden;
 }
 
-.heroMateo::after {
-  /* “Character” silhouette + accents */
-  content: "";
-  position: absolute;
-  right: 10px;
-  bottom: 10px;
-  width: 150px;
-  height: 112px;
-  border-radius: 26px 26px 22px 22px;
-  background:
-    radial-gradient(14px 14px at 58% 32%, rgba(42, 26, 16, 0.55), transparent 60%),
-    radial-gradient(14px 14px at 72% 32%, rgba(42, 26, 16, 0.55), transparent 60%),
-    radial-gradient(32px 26px at 65% 54%, rgba(211, 161, 90, 0.22), transparent 70%),
-    linear-gradient(180deg, rgba(231, 221, 204, 0.18), rgba(231, 221, 204, 0.06));
-  border: 1px solid rgba(231, 221, 204, 0.12);
-  transform: rotate(-2deg);
-  opacity: 0.95;
+.heroLogoLarge {
+  width: min(220px, 92%);
+  height: auto;
+  opacity: 0.98;
+  transform: translateY(2px);
 }
 
 .muted {
