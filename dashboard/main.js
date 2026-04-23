@@ -194,34 +194,6 @@ async function loadCompaniesIndex() {
   }
 }
 
-function renderMasterList(entities, selectedId, onSelect) {
-  const container = document.getElementById("masterList");
-  if (!container) return;
-  container.innerHTML = "";
-
-  if (!entities || entities.length === 0) {
-    const empty = document.createElement("div");
-    empty.className = "masterEmpty muted";
-    empty.textContent = "No hay resultados.";
-    container.appendChild(empty);
-    return;
-  }
-
-  for (const entity of entities) {
-    const id = entity?.id ?? "";
-    const btn = document.createElement("button");
-    btn.type = "button";
-    btn.className = "masterRow";
-    btn.setAttribute("role", "option");
-    const isActive = id === selectedId;
-    btn.setAttribute("aria-selected", isActive ? "true" : "false");
-    if (isActive) btn.classList.add("is-active");
-    btn.textContent = entity?.label ?? id ?? "—";
-    btn.addEventListener("click", () => onSelect(entity));
-    container.appendChild(btn);
-  }
-}
-
 async function loadAssessmentJson(path) {
   const res = await fetch(path, { cache: "no-store" });
   if (!res.ok) throw new Error(`HTTP ${res.status} loading ${path}`);
@@ -315,6 +287,70 @@ function buildViewRow(raw, analysisMode) {
   return { ...base };
 }
 
+function getEntityListMeta(raw, analysisMode) {
+  const data = buildViewRow(raw, analysisMode);
+  const score = typeof data?.assessment?.score === "number" ? data.assessment.score : Number(data?.assessment?.score);
+  const decision = data?.assessment?.decision;
+  const riskLevel = toRiskLevel(Number.isFinite(score) ? score : undefined, decision);
+  const riskLabel = toRiskBandEs(Number.isFinite(score) ? score : undefined, decision);
+  return {
+    scoreLabel: Number.isFinite(score) ? String(score) : "—",
+    riskLevel,
+    riskLabel: riskLabel && riskLabel !== "—" ? riskLabel : "—"
+  };
+}
+
+function renderMasterList(entities, selectedId, onSelect, metaById) {
+  const container = document.getElementById("masterList");
+  if (!container) return;
+  container.innerHTML = "";
+
+  if (!entities || entities.length === 0) {
+    const empty = document.createElement("div");
+    empty.className = "masterEmpty muted";
+    empty.textContent = "No hay resultados.";
+    container.appendChild(empty);
+    return;
+  }
+
+  for (const entity of entities) {
+    const id = entity?.id ?? "";
+    const meta = metaById?.get(id) ?? { scoreLabel: "—", riskLevel: null, riskLabel: "—" };
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "masterCard";
+    btn.setAttribute("role", "option");
+    const isActive = id === selectedId;
+    btn.setAttribute("aria-selected", isActive ? "true" : "false");
+    if (isActive) btn.classList.add("is-active");
+
+    const top = document.createElement("div");
+    top.className = "masterCardTop";
+    const nameEl = document.createElement("span");
+    nameEl.className = "masterCardName";
+    nameEl.textContent = entity?.label ?? id ?? "—";
+    const scoreEl = document.createElement("span");
+    scoreEl.className = "masterCardScore";
+    scoreEl.textContent = meta.scoreLabel;
+    top.appendChild(nameEl);
+    top.appendChild(scoreEl);
+    btn.appendChild(top);
+
+    const pill = document.createElement("span");
+    pill.className = "masterCardPill";
+    pill.textContent = meta.riskLabel;
+    if (meta.riskLevel === "low" || meta.riskLevel === "medium" || meta.riskLevel === "high") {
+      pill.classList.add(meta.riskLevel);
+    } else {
+      pill.classList.add("neutral");
+    }
+    btn.appendChild(pill);
+
+    btn.addEventListener("click", () => onSelect(entity));
+    container.appendChild(btn);
+  }
+}
+
 function applyDashboardData(raw, analysisMode) {
   const mode = analysisMode === "pyme" ? "pyme" : "persona";
   applyModeLabels(mode);
@@ -365,18 +401,15 @@ function applyDashboardData(raw, analysisMode) {
 }
 
 function syncMasterPanelChrome(mode) {
-  const title = document.getElementById("masterListTitle");
   const search = document.getElementById("masterSearch");
   const list = document.getElementById("masterList");
   if (mode === "pyme") {
-    if (title) title.textContent = "Empresas";
     if (search) {
       search.placeholder = "Buscar...";
       search.setAttribute("aria-label", "Buscar empresa");
     }
     if (list) list.setAttribute("aria-label", "Lista de empresas");
   } else {
-    if (title) title.textContent = "Solicitantes";
     if (search) {
       search.placeholder = "Buscar...";
       search.setAttribute("aria-label", "Buscar solicitante");
@@ -406,6 +439,28 @@ async function load() {
   else url.searchParams.delete("user");
   window.history.replaceState({}, "", url.toString());
 
+  const personaMetaById = new Map();
+  for (const u of users) {
+    const uid = u?.id ?? "";
+    try {
+      const raw = await loadAssessmentJson(u?.dataPath ?? "./data.json");
+      personaMetaById.set(uid, getEntityListMeta(raw, "persona"));
+    } catch {
+      personaMetaById.set(uid, { scoreLabel: "—", riskLevel: null, riskLabel: "—" });
+    }
+  }
+
+  const pymeMetaById = new Map();
+  for (const c of companies) {
+    const cid = c?.id ?? "";
+    try {
+      const raw = await loadAssessmentJson(c?.dataPath ?? "./company_hopper_labs.json");
+      pymeMetaById.set(cid, getEntityListMeta(raw, "pyme"));
+    } catch {
+      pymeMetaById.set(cid, { scoreLabel: "—", riskLevel: null, riskLabel: "—" });
+    }
+  }
+
   let personaRaw;
   let pymeRaw;
 
@@ -414,11 +469,12 @@ async function load() {
     const list = mode === "pyme" ? companies : users;
     const selectedId = mode === "pyme" ? selectedPyme?.id : selectedPersona?.id;
     const onSelect = mode === "pyme" ? onSelectPyme : onSelectPersona;
+    const metaMap = mode === "pyme" ? pymeMetaById : personaMetaById;
     const q = (masterSearch?.value ?? "").trim().toLowerCase();
     const filtered = q
       ? list.filter((item) => String(item?.label ?? item?.id ?? "").toLowerCase().includes(q))
       : list;
-    renderMasterList(filtered, selectedId, onSelect);
+    renderMasterList(filtered, selectedId, onSelect, metaMap);
   }
 
   async function loadPersonaPayload(u) {

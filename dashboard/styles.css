@@ -98,7 +98,6 @@ main.container.workspaceLayout {
   font-weight: 650;
   color: var(--brown-dark);
   letter-spacing: 0.04em;
-  text-transform: uppercase;
   margin-bottom: 10px;
 }
 
@@ -165,7 +164,7 @@ main.container.workspaceLayout {
 .masterList {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 10px;
   max-height: min(70vh, 520px);
   overflow-y: auto;
   padding-right: 2px;
@@ -176,34 +175,98 @@ main.container.workspaceLayout {
   font-size: 13px;
 }
 
-.masterRow {
+.masterCard {
   width: 100%;
   text-align: left;
-  padding: 10px 10px;
-  border-radius: 12px;
-  border: 1px solid transparent;
-  background: transparent;
+  padding: 12px 12px 12px 11px;
+  border-radius: 14px;
+  border: 1px solid rgba(90, 52, 18, 0.12);
+  border-left: 3px solid transparent;
+  background: rgba(255, 255, 255, 0.42);
+  box-shadow: 0 1px 3px rgba(90, 52, 18, 0.05);
   cursor: pointer;
   color: rgba(42, 26, 16, 0.94);
   font: inherit;
-  line-height: 1.25;
+  transition: background 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
 }
 
-.masterRow:hover {
-  background: rgba(216, 199, 174, 0.35);
-  border-color: rgba(90, 52, 18, 0.10);
+.masterCard:hover {
+  background: rgba(255, 255, 255, 0.62);
+  border-color: rgba(90, 52, 18, 0.16);
 }
 
-.masterRow:focus-visible {
+.masterCard:focus-visible {
   outline: none;
-  box-shadow: var(--ring);
+  box-shadow: var(--ring), 0 1px 3px rgba(90, 52, 18, 0.05);
 }
 
-.masterRow.is-active {
-  background: rgba(243, 235, 221, 0.92);
-  border-color: rgba(90, 52, 18, 0.18);
-  box-shadow: 0 6px 14px rgba(90, 52, 18, 0.08);
-  font-weight: 600;
+.masterCard.is-active {
+  background: rgba(243, 235, 221, 0.88);
+  border-color: rgba(90, 52, 18, 0.16);
+  border-left-color: var(--gold-soft);
+  box-shadow: 0 6px 16px rgba(90, 52, 18, 0.10);
+}
+
+.masterCardTop {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.masterCardName {
+  flex: 1 1 auto;
+  min-width: 0;
+  font-size: 14px;
+  font-weight: 650;
+  line-height: 1.25;
+  color: var(--brown-dark);
+}
+
+.masterCardScore {
+  flex-shrink: 0;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+  color: var(--brown-dark);
+}
+
+.masterCardPill {
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 11px;
+  font-weight: 650;
+  letter-spacing: 0.03em;
+  padding: 5px 11px;
+  border-radius: 999px;
+  border: 1px solid rgba(90, 52, 18, 0.14);
+  background: rgba(231, 221, 204, 0.55);
+  color: rgba(90, 52, 18, 0.88);
+}
+
+.masterCardPill.low {
+  border-color: rgba(31, 122, 58, 0.38);
+  background: rgba(31, 122, 58, 0.12);
+  color: var(--risk-low);
+}
+
+.masterCardPill.medium {
+  border-color: rgba(183, 121, 31, 0.45);
+  background: rgba(183, 121, 31, 0.14);
+  color: var(--risk-mid);
+}
+
+.masterCardPill.high {
+  border-color: rgba(184, 50, 42, 0.42);
+  background: rgba(184, 50, 42, 0.12);
+  color: var(--risk-high);
+}
+
+.masterCardPill.neutral {
+  border-color: rgba(90, 52, 18, 0.12);
+  background: rgba(231, 221, 204, 0.45);
+  color: rgba(90, 52, 18, 0.72);
 }
 
 .detailPane {
