@@ -145,7 +145,10 @@ body {
 
 /* === CONTENT CARD (do not change visual intent) === */
 .card {
-  margin-top: 16px;
+  /* Lift card up to overlap hero */
+  margin-top: -22px;
+  position: relative;
+  z-index: 2;
   border: 1px solid var(--border);
   border-radius: var(--radius);
   padding: 18px;
