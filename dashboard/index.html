@@ -92,7 +92,24 @@
                   <div class="label">Decisión</div>
                   <div class="decisionText" id="decisionText">—</div>
                 </div>
-                <div class="pill decisionPill" id="decisionPill">—</div>
+                <div class="dropdown decisionDropdown" id="decisionDropdown">
+                  <button
+                    type="button"
+                    class="pill decisionPill decisionPillTrigger"
+                    id="decisionPillTrigger"
+                    aria-haspopup="listbox"
+                    aria-expanded="false"
+                    aria-label="Cambiar estado de decisión"
+                  >
+                    <span id="decisionPillLabel">—</span>
+                    <span class="chevron" aria-hidden="true">▾</span>
+                  </button>
+                  <div class="dropdownMenu decisionDropdownMenu" id="decisionPillMenu" role="listbox" aria-label="Estado">
+                    <button type="button" class="menuItem" role="option" data-decision="reject">Rechazado</button>
+                    <button type="button" class="menuItem" role="option" data-decision="approve">Aceptado</button>
+                    <button type="button" class="menuItem" role="option" data-decision="review">Revisión</button>
+                  </div>
+                </div>
               </div>
               <div class="heroMeta">
                 <div class="metaItem">

@@ -282,7 +282,16 @@ main.container.workspaceLayout {
 }
 
 .analysisBar {
-  padding: 12px 0;
+  width: 100%;
+  padding: 14px 0 18px;
+  background: linear-gradient(
+    180deg,
+    rgba(107, 58, 16, 0.09) 0%,
+    rgba(216, 199, 174, 0.38) 42%,
+    rgba(231, 221, 204, 0.58) 100%
+  );
+  border-bottom: 1px solid rgba(90, 52, 18, 0.08);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
 .analysisInner {
@@ -494,6 +503,36 @@ main.container.workspaceLayout {
 .decisionPill {
   padding: 10px 14px;
   font-size: 13px;
+}
+
+.decisionDropdown {
+  position: relative;
+  align-self: flex-start;
+  z-index: 4;
+}
+
+.decisionPillTrigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  min-width: 148px;
+  cursor: pointer;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+}
+
+.decisionPillTrigger:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}
+
+.dropdown.decisionDropdown .dropdownMenu.decisionDropdownMenu {
+  left: auto;
+  right: 0;
+  min-width: 100%;
+  white-space: nowrap;
 }
 
 .pill.approve {

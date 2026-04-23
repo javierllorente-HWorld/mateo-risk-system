@@ -22,22 +22,39 @@ function setList(id, items, mapItem) {
   }
 }
 
-function setDecisionPill(decision) {
-  const pill = document.getElementById("decisionPill");
-  if (!pill) return;
-  pill.className = "pill";
-  const label = toDecisionLabelEs(decision);
-  pill.textContent = (label ?? "—").toString().toUpperCase();
-  if (decision === "approve" || decision === "review" || decision === "reject") {
-    pill.classList.add(decision);
-  }
-}
+let lastDashboardScore = NaN;
 
 function toDecisionLabelEs(decision) {
-  if (decision === "approve") return "Aprobado";
+  if (decision === "approve") return "Aceptado";
   if (decision === "review") return "Revisión";
   if (decision === "reject") return "Rechazado";
   return decision ?? "—";
+}
+
+function setDecisionSelector(decision) {
+  const trigger = document.getElementById("decisionPillTrigger");
+  const pillLabel = document.getElementById("decisionPillLabel");
+  if (!trigger || !pillLabel) return;
+  trigger.className = "pill decisionPill decisionPillTrigger";
+  pillLabel.textContent = toDecisionLabelEs(decision);
+  if (decision === "approve" || decision === "review" || decision === "reject") {
+    trigger.classList.add(decision);
+  }
+}
+
+function applyDecisionVisuals(score, decision) {
+  const riskLevel = toRiskLevel(Number.isFinite(score) ? score : undefined, decision);
+  const riskBand = toRiskBandEs(Number.isFinite(score) ? score : undefined, decision);
+  const decisionEl = document.getElementById("decisionText");
+  if (decisionEl) decisionEl.className = `decisionText${decision ? ` ${decision}` : ""}`;
+  setText("decisionText", toDecisionLabelEs(decision));
+  setDecisionSelector(decision);
+  setText("scoreContext", riskBand);
+  setText("generalStatus", riskBand);
+  const scoreCtx = document.getElementById("scoreContext");
+  if (scoreCtx) scoreCtx.className = `scoreContext${riskLevel ? ` ${riskLevel}` : ""}`;
+  const status = document.getElementById("generalStatus");
+  if (status) status.className = `statusChip${riskLevel ? ` ${riskLevel}` : ""}`;
 }
 
 function toRiskBandEs(score, decision) {
@@ -359,25 +376,12 @@ function applyDashboardData(raw, analysisMode) {
   setText("applicantName", data?.applicantName);
   const score = typeof data?.assessment?.score === "number" ? data.assessment.score : Number(data?.assessment?.score);
   const decision = data?.assessment?.decision;
-  const riskLevel = toRiskLevel(Number.isFinite(score) ? score : undefined, decision);
-  const riskBand = toRiskBandEs(Number.isFinite(score) ? score : undefined, decision);
+  lastDashboardScore = Number.isFinite(score) ? score : NaN;
 
   setText("score", Number.isFinite(score) ? String(score) : "—");
-  setText("scoreContext", riskBand);
-  setText("generalStatus", riskBand);
+  applyDecisionVisuals(Number.isFinite(score) ? score : NaN, decision);
 
-  const scoreCtx = document.getElementById("scoreContext");
-  if (scoreCtx) scoreCtx.className = `scoreContext${riskLevel ? ` ${riskLevel}` : ""}`;
-
-  const status = document.getElementById("generalStatus");
-  if (status) status.className = `statusChip${riskLevel ? ` ${riskLevel}` : ""}`;
-
-  const decisionEl = document.getElementById("decisionText");
-  if (decisionEl) decisionEl.className = `decisionText${decision ? ` ${decision}` : ""}`;
-
-  setText("decisionText", toDecisionLabelEs(decision));
   setText("summary", normalizeSummaryEs(data?.assessment?.summary, decision, Number.isFinite(score) ? score : undefined));
-  setDecisionPill(data?.assessment?.decision);
 
   setList("reasons", data?.assessment?.reasons);
   setList("flags", data?.assessment?.flags, flagToLabelEs);
@@ -416,6 +420,46 @@ function syncMasterPanelChrome(mode) {
     }
     if (list) list.setAttribute("aria-label", "Lista de solicitantes");
   }
+}
+
+function initDecisionDropdown() {
+  const root = document.getElementById("decisionDropdown");
+  const trigger = document.getElementById("decisionPillTrigger");
+  const menu = document.getElementById("decisionPillMenu");
+  if (!root || !trigger || !menu) return;
+
+  const open = () => {
+    menu.classList.add("open");
+    trigger.setAttribute("aria-expanded", "true");
+  };
+  const close = () => {
+    menu.classList.remove("open");
+    trigger.setAttribute("aria-expanded", "false");
+  };
+
+  trigger.addEventListener("click", (e) => {
+    e.stopPropagation();
+    if (menu.classList.contains("open")) close();
+    else open();
+  });
+
+  menu.querySelectorAll("[data-decision]").forEach((btn) => {
+    btn.addEventListener("click", (e) => {
+      e.stopPropagation();
+      const d = btn.getAttribute("data-decision");
+      if (d === "approve" || d === "review" || d === "reject") {
+        applyDecisionVisuals(lastDashboardScore, d);
+      }
+      close();
+    });
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!root.contains(e.target)) close();
+  });
+  document.addEventListener("keydown", (e) => {
+    if (e.key === "Escape") close();
+  });
 }
 
 async function load() {
@@ -471,10 +515,13 @@ async function load() {
     const onSelect = mode === "pyme" ? onSelectPyme : onSelectPersona;
     const metaMap = mode === "pyme" ? pymeMetaById : personaMetaById;
     const q = (masterSearch?.value ?? "").trim().toLowerCase();
-    const filtered = q
+    const matched = q
       ? list.filter((item) => String(item?.label ?? item?.id ?? "").toLowerCase().includes(q))
-      : list;
-    renderMasterList(filtered, selectedId, onSelect, metaMap);
+      : [...list];
+    matched.sort((a, b) =>
+      String(a?.label ?? a?.id ?? "").localeCompare(String(b?.label ?? b?.id ?? ""), "es", { sensitivity: "base" })
+    );
+    renderMasterList(matched, selectedId, onSelect, metaMap);
   }
 
   async function loadPersonaPayload(u) {
@@ -538,6 +585,8 @@ async function load() {
     await loadPymePayload(selectedPyme);
   }
 }
+
+initDecisionDropdown();
 
 load().catch((e) => {
   console.error("Failed to load dashboard data:", e);
