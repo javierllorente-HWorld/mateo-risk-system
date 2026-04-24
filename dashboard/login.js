@@ -4,7 +4,8 @@
  */
 const INTERNAL_ACCOUNTS = [
   { email: "analista@empresa.com", password: "Riesgo2026" },
-  { email: "riesgo@empresa.com", password: "Panel2026" }
+  { email: "riesgo@empresa.com", password: "Panel2026" },
+  { email: "risk.analyst.demo@mateo.ai", password: "MateoDemo123!" }
 ];
 
 const AUTH_KEY = "dashboard_auth";
