@@ -1,0 +1,53 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Acceso interno — Panel de riesgo</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./login.css" />
+  </head>
+  <body>
+    <div class="loginPage">
+      <main class="loginCard" aria-labelledby="loginTitle">
+        <header class="loginCardHeader">
+          <h1 class="loginCardTitle" id="loginTitle">Acceso interno</h1>
+          <p class="loginCardSubtitle">Herramienta para analistas de riesgo. Ingresá con tu cuenta corporativa.</p>
+        </header>
+
+        <form class="loginForm" id="loginForm" novalidate>
+          <div class="loginField">
+            <label class="label" for="loginEmail">Correo electrónico</label>
+            <input
+              class="loginInput"
+              id="loginEmail"
+              name="email"
+              type="email"
+              autocomplete="username"
+              required
+              placeholder="nombre@empresa.com"
+            />
+          </div>
+          <div class="loginField">
+            <label class="label" for="loginPassword">Contraseña</label>
+            <input
+              class="loginInput"
+              id="loginPassword"
+              name="password"
+              type="password"
+              autocomplete="current-password"
+              required
+              placeholder="••••••••"
+            />
+          </div>
+          <p class="loginError" id="loginError" role="alert" hidden></p>
+          <button type="submit" class="loginSubmit">Iniciar sesión</button>
+        </form>
+
+        <p class="loginHint">Las cuentas las administra la empresa. Si no tenés acceso, contactá a tu responsable.</p>
+      </main>
+    </div>
+    <script type="module" src="./login.js"></script>
+  </body>
+</html>

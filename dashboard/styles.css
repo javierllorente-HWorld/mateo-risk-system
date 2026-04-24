@@ -824,6 +824,31 @@ main.container.workspaceLayout {
   font-size: 13px;
 }
 
+.footerRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+}
+
+.footerLogout {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: underline;
+  cursor: pointer;
+  text-underline-offset: 2px;
+}
+
+.footerLogout:hover {
+  color: var(--brown-dark);
+}
+
 code {
   padding: 2px 6px;
   border-radius: 8px;

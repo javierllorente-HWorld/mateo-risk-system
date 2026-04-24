@@ -575,6 +575,13 @@ async function load() {
 
 initDecisionDropdown();
 
+document.getElementById("footerLogout")?.addEventListener("click", () => {
+  try {
+    sessionStorage.removeItem("dashboard_auth");
+  } catch {}
+  window.location.href = "./login.html";
+});
+
 load().catch((e) => {
   console.error("Failed to load dashboard data:", e);
   setText("summary", "Error cargando data.json");

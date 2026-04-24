@@ -1,0 +1,146 @@
+/* Pantalla de acceso interno — reutiliza variables de styles.css */
+
+.loginPage {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 24px 18px;
+}
+
+.loginCard {
+  width: 100%;
+  max-width: 420px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px 24px 26px;
+  background: linear-gradient(180deg, rgba(243, 235, 221, 0.92), rgba(231, 221, 204, 0.92));
+  box-shadow: var(--shadow);
+}
+
+.loginCardHeader {
+  text-align: center;
+  margin-bottom: 22px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid rgba(90, 52, 18, 0.12);
+}
+
+.loginCardTitle {
+  margin: 0 0 6px 0;
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--brown-dark);
+  letter-spacing: 0.02em;
+}
+
+.loginCardSubtitle {
+  margin: 0;
+  font-size: 14px;
+  color: var(--muted);
+  line-height: 1.35;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.loginField {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.loginField .label {
+  text-transform: none;
+  letter-spacing: 0.02em;
+  font-size: 13px;
+}
+
+.loginInput {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 12px;
+  border: 1px solid rgba(90, 52, 18, 0.14);
+  background: rgba(255, 255, 255, 0.72);
+  color: rgba(42, 26, 16, 0.94);
+  font: inherit;
+  font-size: 15px;
+}
+
+.loginInput:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}
+
+.loginError {
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 12px;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--risk-high);
+  background: rgba(184, 50, 42, 0.1);
+  border: 1px solid rgba(184, 50, 42, 0.28);
+}
+
+.loginError[hidden] {
+  display: none;
+}
+
+.loginSubmit {
+  margin-top: 4px;
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: 12px;
+  border: 1px solid rgba(90, 52, 18, 0.22);
+  background: #6b3a10;
+  color: #f7eedd;
+  font: inherit;
+  font-size: 15px;
+  font-weight: 650;
+  cursor: pointer;
+  box-shadow: var(--shadow-soft);
+}
+
+.loginSubmit:hover {
+  filter: brightness(1.06);
+}
+
+.loginSubmit:focus-visible {
+  outline: none;
+  box-shadow: var(--ring);
+}
+
+.loginHint {
+  margin: 18px 0 0 0;
+  font-size: 12px;
+  color: var(--muted);
+  text-align: center;
+  line-height: 1.4;
+}
+
+.footerLogout {
+  margin: 0;
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  font-size: 13px;
+  color: var(--muted);
+  text-decoration: underline;
+  cursor: pointer;
+  text-underline-offset: 2px;
+}
+
+.footerLogout:hover {
+  color: var(--brown-dark);
+}
+
+.footerRow {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px 16px;
+}

@@ -6,6 +6,17 @@
     <title>Panel de riesgo de solicitantes</title>
     <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./styles.css" />
+    <script>
+      (function () {
+        try {
+          if (!sessionStorage.getItem("dashboard_auth")) {
+            window.location.replace("login.html");
+          }
+        } catch {
+          window.location.replace("login.html");
+        }
+      })();
+    </script>
   </head>
   <body>
     <header class="heroBar">
@@ -164,8 +175,9 @@
             </div>
           </section>
 
-          <footer class="footer muted">
-            Datos desde <code>dashboard/data.json</code> y fuentes locales.
+          <footer class="footer muted footerRow">
+            <span>Datos desde <code>dashboard/data.json</code> y fuentes locales.</span>
+            <button type="button" class="footerLogout" id="footerLogout">Cerrar sesión</button>
           </footer>
         </div>
       </div>
