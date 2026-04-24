@@ -56,44 +56,46 @@
 
     <main class="container workspaceLayout">
       <div class="workspace">
-        <section class="analysisBar" aria-label="Tipo de análisis">
-          <div class="analysisInner">
-            <div class="analysisLabel">Analizar como:</div>
-            <div class="segmented" role="radiogroup" aria-label="Analizar como">
-              <input type="radio" name="analysisType" id="analysisPyme" class="segmentedInput" value="pyme" />
-              <label for="analysisPyme" class="segmentedOption">Pyme</label>
+        <div class="workspaceSidebar">
+          <section class="analysisBar" aria-label="Tipo de análisis">
+            <div class="analysisInner">
+              <div class="analysisLabel">Analizar como:</div>
+              <div class="segmented" role="radiogroup" aria-label="Analizar como">
+                <input type="radio" name="analysisType" id="analysisPyme" class="segmentedInput" value="pyme" />
+                <label for="analysisPyme" class="segmentedOption">Pyme</label>
 
-              <input type="radio" name="analysisType" id="analysisPersona" class="segmentedInput" value="persona" checked />
-              <label for="analysisPersona" class="segmentedOption">Persona</label>
+                <input type="radio" name="analysisType" id="analysisPersona" class="segmentedInput" value="persona" checked />
+                <label for="analysisPersona" class="segmentedOption">Persona</label>
+              </div>
             </div>
-          </div>
-        </section>
+          </section>
 
-        <aside class="masterPanel" id="masterPanel" aria-labelledby="masterListTitle">
-          <div class="masterPanelTitle" id="masterListTitle">Solicitantes</div>
-          <div class="masterSearchWrap">
-            <span class="masterSearchIcon" aria-hidden="true">
-              <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path
-                  d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
-                  stroke="currentColor"
-                  stroke-width="1.85"
-                  stroke-linejoin="round"
-                />
-                <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
-              </svg>
-            </span>
-            <input
-              type="search"
-              id="masterSearch"
-              class="masterSearchInput"
-              placeholder="Buscar..."
-              autocomplete="off"
-              aria-label="Buscar solicitante"
-            />
-          </div>
-          <div class="masterList" id="masterList" role="listbox" aria-label="Lista de solicitantes"></div>
-        </aside>
+          <aside class="masterPanel" id="masterPanel" aria-labelledby="masterListTitle">
+            <div class="masterPanelTitle" id="masterListTitle">Solicitantes</div>
+            <div class="masterSearchWrap">
+              <span class="masterSearchIcon" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <path
+                    d="M10.5 18a7.5 7.5 0 1 1 0-15 7.5 7.5 0 0 1 0 15Z"
+                    stroke="currentColor"
+                    stroke-width="1.85"
+                    stroke-linejoin="round"
+                  />
+                  <path d="M16.2 16.2 21 21" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" />
+                </svg>
+              </span>
+              <input
+                type="search"
+                id="masterSearch"
+                class="masterSearchInput"
+                placeholder="Buscar..."
+                autocomplete="off"
+                aria-label="Buscar solicitante"
+              />
+            </div>
+            <div class="masterList" id="masterList" role="listbox" aria-label="Lista de solicitantes"></div>
+          </aside>
+        </div>
 
         <div class="detailPane">
           <section class="card" id="app">
