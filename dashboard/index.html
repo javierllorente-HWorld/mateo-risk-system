@@ -43,21 +43,21 @@
       </div>
     </header>
 
-    <section class="analysisBar" aria-label="Tipo de análisis">
-      <div class="container analysisInner">
-        <div class="analysisLabel">Analizar como:</div>
-        <div class="segmented" role="radiogroup" aria-label="Analizar como">
-          <input type="radio" name="analysisType" id="analysisPyme" class="segmentedInput" value="pyme" />
-          <label for="analysisPyme" class="segmentedOption">Pyme</label>
-
-          <input type="radio" name="analysisType" id="analysisPersona" class="segmentedInput" value="persona" checked />
-          <label for="analysisPersona" class="segmentedOption">Persona</label>
-        </div>
-      </div>
-    </section>
-
     <main class="container workspaceLayout">
       <div class="workspace">
+        <section class="analysisBar" aria-label="Tipo de análisis">
+          <div class="analysisInner">
+            <div class="analysisLabel">Analizar como:</div>
+            <div class="segmented" role="radiogroup" aria-label="Analizar como">
+              <input type="radio" name="analysisType" id="analysisPyme" class="segmentedInput" value="pyme" />
+              <label for="analysisPyme" class="segmentedOption">Pyme</label>
+
+              <input type="radio" name="analysisType" id="analysisPersona" class="segmentedInput" value="persona" checked />
+              <label for="analysisPersona" class="segmentedOption">Persona</label>
+            </div>
+          </div>
+        </section>
+
         <aside class="masterPanel" id="masterPanel" aria-labelledby="masterListTitle">
           <div class="masterPanelTitle" id="masterListTitle">Solicitantes</div>
           <div class="masterSearchWrap">

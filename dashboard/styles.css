@@ -79,16 +79,35 @@ main.container.workspaceLayout {
   max-width: 1400px;
 }
 
-.analysisBar .container {
-  max-width: 1400px;
-}
-
 .workspace {
   display: grid;
   grid-template-columns: minmax(272px, 320px) minmax(0, 1fr);
-  gap: 24px;
+  grid-template-rows: auto auto;
+  column-gap: 24px;
+  row-gap: 14px;
   align-items: start;
   overflow: visible;
+}
+
+.workspace > .analysisBar {
+  grid-column: 1;
+  grid-row: 1;
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  align-self: start;
+}
+
+.workspace > .masterPanel {
+  grid-column: 1;
+  grid-row: 2;
+  align-self: start;
+}
+
+.workspace > .detailPane {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  align-self: start;
 }
 
 .masterPanel {
@@ -274,14 +293,13 @@ main.container.workspaceLayout {
 
 .analysisBar {
   width: 100%;
-  padding: 14px 0 18px;
+  padding: 14px 4px 12px;
   background: linear-gradient(
     180deg,
     rgba(107, 58, 16, 0.09) 0%,
     rgba(216, 199, 174, 0.38) 42%,
     rgba(231, 221, 204, 0.58) 100%
   );
-  border-bottom: 1px solid rgba(90, 52, 18, 0.08);
   box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.18);
 }
 
@@ -289,7 +307,9 @@ main.container.workspaceLayout {
   display: flex;
   align-items: center;
   justify-content: center;
+  flex-wrap: wrap;
   gap: 12px;
+  width: 100%;
 }
 
 .analysisLabel {
@@ -833,6 +853,15 @@ code {
   }
   .workspace {
     grid-template-columns: 1fr;
+    grid-template-rows: auto;
+    row-gap: 14px;
+  }
+
+  .workspace > .analysisBar,
+  .workspace > .masterPanel,
+  .workspace > .detailPane {
+    grid-column: 1;
+    grid-row: auto;
   }
 }
 
