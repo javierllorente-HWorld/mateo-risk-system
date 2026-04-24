@@ -820,7 +820,10 @@ main.container.workspaceLayout {
 }
 
 .footer {
-  margin-top: 14px;
+  margin-top: 36px;
+  padding-top: 22px;
+  padding-bottom: 28px;
+  border-top: 1px solid rgba(90, 52, 18, 0.09);
   font-size: 13px;
 }
 
@@ -829,7 +832,7 @@ main.container.workspaceLayout {
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 10px 16px;
+  gap: 14px 20px;
 }
 
 .footerLogout {
