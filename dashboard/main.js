@@ -311,6 +311,46 @@ function getEntityListMeta(raw, analysisMode) {
   };
 }
 
+const MASTER_LIST_ITEMS_PER_PAGE = 6;
+
+function renderMasterPagination(totalPages, currentPage, onPageChange) {
+  const root = document.getElementById("masterPagination");
+  if (!root) return;
+
+  if (totalPages <= 1) {
+    root.hidden = true;
+    root.innerHTML = "";
+    return;
+  }
+
+  root.hidden = false;
+  root.innerHTML = "";
+
+  const inner = document.createElement("div");
+  inner.className = "masterPaginationInner";
+
+  const prev = document.createElement("button");
+  prev.type = "button";
+  prev.className = "masterPaginationBtn";
+  prev.textContent = "Anterior";
+  prev.disabled = currentPage === 1;
+  prev.addEventListener("click", () => onPageChange(Math.max(1, currentPage - 1)));
+
+  const status = document.createElement("span");
+  status.className = "masterPaginationStatus";
+  status.textContent = `Página ${currentPage} de ${totalPages}`;
+
+  const next = document.createElement("button");
+  next.type = "button";
+  next.className = "masterPaginationBtn";
+  next.textContent = "Siguiente";
+  next.disabled = currentPage === totalPages;
+  next.addEventListener("click", () => onPageChange(Math.min(totalPages, currentPage + 1)));
+
+  inner.append(prev, status, next);
+  root.appendChild(inner);
+}
+
 function renderMasterList(entities, selectedId, onSelect, metaById) {
   const container = document.getElementById("masterList");
   if (!container) return;
@@ -495,6 +535,9 @@ async function load() {
   let personaRaw;
   let pymeRaw;
 
+  let masterListCurrentPage = 1;
+  let masterListPrevSearch = "";
+
   function renderFiltered() {
     const mode = getCurrentAnalysisMode();
     const list = mode === "pyme" ? companies : users;
@@ -502,13 +545,34 @@ async function load() {
     const onSelect = mode === "pyme" ? onSelectPyme : onSelectPersona;
     const metaMap = mode === "pyme" ? pymeMetaById : personaMetaById;
     const q = (masterSearch?.value ?? "").trim().toLowerCase();
+
+    if (q !== masterListPrevSearch) {
+      masterListCurrentPage = 1;
+      masterListPrevSearch = q;
+    }
+
     const matched = q
       ? list.filter((item) => String(item?.label ?? item?.id ?? "").toLowerCase().includes(q))
       : [...list];
     matched.sort((a, b) =>
       String(a?.label ?? a?.id ?? "").localeCompare(String(b?.label ?? b?.id ?? ""), "es", { sensitivity: "base" })
     );
-    renderMasterList(matched, selectedId, onSelect, metaMap);
+
+    const totalPages =
+      matched.length === 0 ? 0 : Math.ceil(matched.length / MASTER_LIST_ITEMS_PER_PAGE);
+
+    if (totalPages > 0 && masterListCurrentPage > totalPages) {
+      masterListCurrentPage = totalPages;
+    }
+
+    const start = (masterListCurrentPage - 1) * MASTER_LIST_ITEMS_PER_PAGE;
+    const paginated = matched.slice(start, start + MASTER_LIST_ITEMS_PER_PAGE);
+
+    renderMasterList(paginated, selectedId, onSelect, metaMap);
+    renderMasterPagination(totalPages, masterListCurrentPage, (page) => {
+      masterListCurrentPage = page;
+      renderFiltered();
+    });
   }
 
   async function loadPersonaPayload(u) {
@@ -546,6 +610,8 @@ async function load() {
     persistAnalysisMode(mode);
     syncMasterPanelChrome(mode);
     if (masterSearch) masterSearch.value = "";
+    masterListCurrentPage = 1;
+    masterListPrevSearch = "";
     if (mode === "persona") {
       if (personaRaw === undefined) await loadPersonaPayload(selectedPersona);
       else applyDashboardData(personaRaw, "persona");

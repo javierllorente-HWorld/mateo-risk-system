@@ -197,6 +197,60 @@ main.container.workspaceLayout {
   padding-right: 2px;
 }
 
+.masterPagination {
+  flex-shrink: 0;
+  margin-top: 4px;
+  padding-top: 12px;
+  border-top: 1px solid rgba(90, 52, 18, 0.1);
+}
+
+.masterPaginationInner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.masterPaginationBtn {
+  flex: 0 0 auto;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 8px 12px;
+  border-radius: 10px;
+  border: 1px solid rgba(90, 52, 18, 0.14);
+  background: rgba(255, 255, 255, 0.5);
+  color: rgba(66, 40, 24, 0.9);
+  box-shadow: 0 1px 2px rgba(90, 52, 18, 0.05);
+  cursor: pointer;
+  transition: background 140ms ease, border-color 140ms ease, box-shadow 140ms ease;
+}
+
+.masterPaginationBtn:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.72);
+  border-color: rgba(90, 52, 18, 0.2);
+}
+
+.masterPaginationBtn:focus-visible {
+  outline: none;
+  box-shadow: var(--ring), 0 1px 2px rgba(90, 52, 18, 0.05);
+}
+
+.masterPaginationBtn:disabled {
+  opacity: 0.42;
+  cursor: not-allowed;
+}
+
+.masterPaginationStatus {
+  flex: 1 1 auto;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 600;
+  color: rgba(90, 52, 18, 0.68);
+  letter-spacing: 0.02em;
+  min-width: 0;
+}
+
 .masterEmpty {
   padding: 8px 4px;
   font-size: 13px;
