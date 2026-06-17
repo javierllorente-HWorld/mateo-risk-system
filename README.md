@@ -1,6 +1,10 @@
 # Mateo Risk System
 
-Mateo Risk System es un sistema interno de análisis de riesgo para fintech que combina un agente IA de riesgo y un dashboard para que los analistas revisen clientes, solicitantes y pymes según su nivel de riesgo.
+Mateo Risk System es un proyecto exploratorio de análisis de riesgo para fintech.
+
+Lo construí después de una primera etapa de aprendizaje, con el objetivo de aplicar una lógica simple de evaluación sobre solicitantes, separar casos por nivel de riesgo y visualizar la información en un dashboard interno.
+
+No busca representar un sistema financiero real ni un modelo de riesgo productivo. Es una práctica para entender cómo estructurar reglas de negocio, trabajar con datos simulados y transformar una lógica técnica en una interfaz clara para revisión.
 
 <img width="1366" height="613" alt="Acceso interno" src="https://github.com/user-attachments/assets/80be417d-0c82-46b8-b865-1d41cf8fda45" />
 
@@ -12,24 +16,22 @@ Panel de riesgo: dashboard interno para revisar empresas o personas, con score, 
 
 ## Features
 
-- **Agente IA de riesgo** — Clasifica casos según nivel de riesgo antes de la revisión manual.
-- **Dashboard interno para risk analysts** — Permite revisar casos en una interfaz pensada para uso interno.
-- **Login interno** — Acceso restringido para analistas con credenciales predefinidas.
-- **Flujo separado para Persona y Pyme** — Cada vista tiene su propia lógica, datos y estructura.
-- **Lista de solicitantes** — Navegación lateral para seleccionar rápidamente el caso a revisar.
-- **Detalle del caso** — Visualización de decisión, puntaje, datos clave, resumen, motivos y señales de riesgo.
-- **Cambio manual de decisión** — El analista puede cambiar entre Rechazado, Aceptado o Revisión.
-- **Riesgo desacoplado de la decisión** — El nivel de riesgo depende del score, no del estado manual.
-- **UI interna orientada a operaciones** — Diseño pensado para parecer una herramienta de trabajo real.
-- **Deploy público de demo** — Versión accesible para mostrar el producto funcionando.
+- Lógica de análisis de riesgo — Clasifica casos según score, señales y nivel de riesgo.
+- Dashboard interno — Permite revisar solicitantes desde una interfaz pensada para analistas.
+- Login de demo — Acceso simple con credenciales predefinidas.
+- Flujo para Persona y PyME — Cada tipo de solicitante tiene datos y estructura propia.
+- Lista de solicitantes — Navegación lateral para seleccionar rápidamente un caso.
+- Detalle del caso — Muestra decisión, puntaje, datos clave, resumen, motivos y señales de riesgo.
+- Cambio manual de decisión — El analista puede cambiar entre Aceptado, Rechazado o Revisión.
+- Demo pública — Versión desplegada para mostrar el flujo funcionando.
 
 ## En qué me enfoqué
 
-- diseñar una herramienta interna más cercana a un caso real de fintech
-- construir un flujo separado para personas y pymes dentro del mismo sistema
-- trabajar la lógica entre score, riesgo y decisión manual
-- ordenar la experiencia para analistas, no para usuarios finales
-- transformar una demo técnica en una interfaz con lógica de producto
+- Diseñar una herramienta interna cercana a un caso de uso fintech.
+- Practicar la relación entre datos, score, riesgo y decisión.
+- Separar la experiencia para personas y PyMEs.
+- Ordenar la información para un usuario operativo, no para un cliente final.
+- Convertir una lógica técnica simple en una interfaz clara de revisión.
 
 ## Stack
 
@@ -42,8 +44,10 @@ Panel de riesgo: dashboard interno para revisar empresas o personas, con score, 
 
 ## Estado del proyecto
 
-Prototipo funcional en evolución.  
-Actualmente muestra el flujo completo de login, selección de casos, revisión de riesgo y visualización separada para Persona y Pyme. El próximo paso es conectar el sistema a una base de datos real y reemplazar la data mock por fuentes reales.
+Proyecto exploratorio funcional.
+
+Actualmente muestra el flujo de login, selección de casos, revisión de riesgo y visualización separada para Persona y PyME. Usa datos simulados y reglas simples para representar el proceso de análisis.
+No es un modelo financiero real ni un sistema listo para producción. El objetivo fue practicar lógica de negocio, estructura de datos e interfaz interna aplicada a un caso fintech.
 
 ## Demo
 
